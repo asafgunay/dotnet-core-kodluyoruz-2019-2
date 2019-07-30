@@ -36,7 +36,7 @@ Aksi durumda kurulum başarısızdır. Adımları kontrol ederek tekrar deneyin.
 
 * [Visual Studio Code Kurulumunu yapın](https://code.visualstudio.com/)
 
-* [Kodluyoruz Bursa #Slack Kanalımıza katılın](https://join.slack.com/t/kodluyoruzbursa/shared_invite/enQtNjA2OTMzODk1MzgxLTdhN2ZjYTdhNTRiNTQzNmE5MmQxNTNkOTM4NjA1ZGQyMWIzNTBhMGQyOTA0NWRmNjI5NjNkZjViZTFmZTk2NmM)
+* [Kodluyoruz Bursa #Slack Kanalımıza katılın](https://join.slack.com/t/kodluyoruzbursa/shared_invite/enQtNjIzNzYzNjU2MzM4LThkM2IwM2ZiY2U2YjliMTkxNmZhODcwNTg2NTE3MzhkY2NiNTJhNTkzZDI2NmI0ZmI1YzMwMjkzNjA3M2M5YmQ)
 
 Not: Eğer herhangi bir sorun yaşarsanız email üzerinden benimle iletişime geçebilirsiniz.
 
