@@ -22,6 +22,18 @@ dotnet --version
 ve sonuç olarak bir versiyon numarası size gönderilmeli.
 Aksi durumda kurulum başarısızdır. Adımları kontrol ederek tekrar deneyin.
 
+* Bu noktaya kadar başarılı geldiyseniz Visual Studio’yu açarak aşağıdaki adımları uygulayıp kurulumu test edin (VS2017 üzerinden adımlar anlatılmıştır VS2019’da benzer adımlar ile kolaylıkla erişebilirsiniz) :
+
+1. File ->  New -> Project
+
+2. Açılan ekranda sol taraftan Web seçeneğini seçerek çıkan sonuçlardan bunu seçin : "ASP.NET Core Web Application” ardından "OK" seçeneğini seçin.
+
+3. Proje taslaklarının gösterildiği bir panel açılacak buradan “Empty” seçeneğini seçiniz.
+
+4. Proje yüklendikten sonra menüden Debug -> Start Debugging yapın
+
+5. Tarayıcınız açılacak ve “Hello World” yazısı göründüğünde kurulumunuz başarılı olacaktır.
+
 * [Visual Studio Code Kurulumunu yapın](https://code.visualstudio.com/)
 
 * [Kodluyoruz Bursa #Slack Kanalımıza katılın](https://join.slack.com/t/kodluyoruzbursa/shared_invite/enQtNjA2OTMzODk1MzgxLTdhN2ZjYTdhNTRiNTQzNmE5MmQxNTNkOTM4NjA1ZGQyMWIzNTBhMGQyOTA0NWRmNjI5NjNkZjViZTFmZTk2NmM)
