@@ -38,6 +38,8 @@ Aksi durumda kurulum başarısızdır. Adımları kontrol ederek tekrar deneyin.
 
 * [Kodluyoruz Bursa #Slack Kanalımıza katılın](https://join.slack.com/t/kodluyoruzbursa/shared_invite/enQtNjIzNzYzNjU2MzM4LThkM2IwM2ZiY2U2YjliMTkxNmZhODcwNTg2NTE3MzhkY2NiNTJhNTkzZDI2NmI0ZmI1YzMwMjkzNjA3M2M5YmQ)
 
+* Telegram davet linki: https://t.me/joinchat/LHETkEYMm0OeHi9_gor2hQ
+
 Not: Eğer herhangi bir sorun yaşarsanız email üzerinden benimle iletişime geçebilirsiniz.
 
 # Konu Başlıkları ve İçerik ("Syllabus"):
