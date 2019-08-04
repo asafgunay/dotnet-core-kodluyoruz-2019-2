@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<div>
+    @foreach (var item in Model)
+    {
+        <div class="m-4">
+            <img src="@item.ImageUrl" class="img-thumbnail" />
+            <p>@item.Name</p>
+            <span class="text-danger">@item.Price</span>
+        </div>
+    }
+</div>
+
