@@ -14,5 +14,13 @@ namespace StartMVC.Controllers
             List<Product> productList = Product.GetSampleData();
             return View(productList);
         }
+        public IActionResult Detail(int id)
+        {
+            List<Product> productList = Product.GetSampleData();
+            // ornek data icerisindeki parametreden gelen id'ye sahip urunu getir!
+            // Where kosulu tum dataList icerisindeki itemlarin kosullandirilmasidir.
+            Product item = productList.Where(x => x.Id == id).FirstOrDefault();
+            return View(item);
+        }
     }
 }

@@ -1,0 +1,9 @@
+﻿@model Product
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h1>@Model.Name</h1>
+<image src="@Model.ImageUrl" class="img-fluid"></image>
+<p class="text-danger">@Model.Price</p>
+
