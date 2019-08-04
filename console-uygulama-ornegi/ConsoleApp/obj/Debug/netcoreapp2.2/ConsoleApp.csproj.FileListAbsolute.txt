@@ -1,0 +1,11 @@
+C:\Users\Asaf\source\repos\kodluyoruz-bootcamp-2\ConsoleApp\bin\Debug\netcoreapp2.2\ConsoleApp.deps.json
+C:\Users\Asaf\source\repos\kodluyoruz-bootcamp-2\ConsoleApp\bin\Debug\netcoreapp2.2\ConsoleApp.runtimeconfig.json
+C:\Users\Asaf\source\repos\kodluyoruz-bootcamp-2\ConsoleApp\bin\Debug\netcoreapp2.2\ConsoleApp.runtimeconfig.dev.json
+C:\Users\Asaf\source\repos\kodluyoruz-bootcamp-2\ConsoleApp\bin\Debug\netcoreapp2.2\ConsoleApp.dll
+C:\Users\Asaf\source\repos\kodluyoruz-bootcamp-2\ConsoleApp\obj\Debug\netcoreapp2.2\ConsoleApp.csprojAssemblyReference.cache
+C:\Users\Asaf\source\repos\kodluyoruz-bootcamp-2\ConsoleApp\obj\Debug\netcoreapp2.2\ConsoleApp.csproj.CoreCompileInputs.cache
+C:\Users\Asaf\source\repos\kodluyoruz-bootcamp-2\ConsoleApp\obj\Debug\netcoreapp2.2\ConsoleApp.AssemblyInfoInputs.cache
+C:\Users\Asaf\source\repos\kodluyoruz-bootcamp-2\ConsoleApp\obj\Debug\netcoreapp2.2\ConsoleApp.AssemblyInfo.cs
+C:\Users\Asaf\source\repos\kodluyoruz-bootcamp-2\ConsoleApp\bin\Debug\netcoreapp2.2\ConsoleApp.pdb
+C:\Users\Asaf\source\repos\kodluyoruz-bootcamp-2\ConsoleApp\obj\Debug\netcoreapp2.2\ConsoleApp.dll
+C:\Users\Asaf\source\repos\kodluyoruz-bootcamp-2\ConsoleApp\obj\Debug\netcoreapp2.2\ConsoleApp.pdb
