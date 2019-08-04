@@ -5,13 +5,27 @@
 
 <h1>Index</h1>
 <div>
-    @foreach (var item in Model)
-    {
-        <div class="m-4">
-            <img src="@item.ImageUrl" class="img-thumbnail" />
-            <p>@item.Name</p>
-            <span class="text-danger">@item.Price</span>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            @*<div class="m-4">
+                <img src="@item.ImageUrl" class="img-thumbnail" />
+                <p>@item.Name</p>
+                <span class="text-danger">@item.Price</span>
+            </div>*@
+            <div class="col-md-4 col-sm-4 col-4 col-lg-4">
+                <div class="card" >
+                    <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text text-danger">@item.Price</p>
+                        <a asp-controller="Product" asp-action="Detail" asp-route-id="@item.Id" class="btn btn-primary">Hemen Al</a>
+                    </div>
+                </div>
+            </div>
+
+        }
         </div>
-    }
-</div>
+
+    </div>
 
