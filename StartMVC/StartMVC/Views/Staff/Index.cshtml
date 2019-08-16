@@ -1,0 +1,50 @@
+﻿@model IEnumerable<StartMVC.Models.Staff>
+@{
+    ViewData["Title"] = "Staffs";
+}
+
+<h1>Staffs</h1>
+<div class="row">
+    <div class="col-12 text-right">
+        <a asp-controller="Staff" asp-action="Create" class="btn btn-primary mb-3">Yeni Kişi Ekle</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col" class="text-center">Ad</th>
+                <th scope="col" class="text-center">Soyad</th>
+                <th scope="col" class="text-center">Ünvan</th>
+                <th scope="col" class="text-center">Cinsiyet</th>
+                <th scope="col" class="text-center">Detay</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int orderCounter = 0;}
+            @foreach (var item in Model)
+            {
+                orderCounter++;
+                <tr>
+                    <th scope="row">
+                        @orderCounter
+                    </th>
+                    <td class="text-center">
+                        @item.Name
+                    </td>
+                    <td class="text-center">
+                        @item.LastName
+                    </td>
+                    <td class="text-center">
+                        @item.JobTitle
+                    </td>
+                    <td class="text-center">
+                        @(item.Gender ? "Kadın" : "Erkek")
+                    </td>
+                    <td class="text-center text-primary">
+                        <a asp-controller="Staff" asp-action="Detail" asp-route-id="@item.Id" class="btn btn-success">İncele</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
