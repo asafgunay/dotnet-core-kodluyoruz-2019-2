@@ -21,7 +21,8 @@ namespace StartEFCore.Controllers
         // TODO: TUM OYUNCULARI GETIRECEK Index Action i yap
         public IActionResult Index()
         {
-            return View();
+            List<Player> list = _context.Players.ToList();
+            return View(list);
         }
 
         // TeamId değerine eşit gelecek id parametresi alır
@@ -128,8 +129,10 @@ namespace StartEFCore.Controllers
                 Player player = _context.Players.Find(model.Id);
                 _context.Players.Remove(player);
                 _context.SaveChanges();
-                return RedirectToAction("TeamPlayers",
-                    new { id = player.TeamId });
+                //return RedirectToAction("TeamPlayers",
+                //    new { id = player.TeamId });
+
+                return RedirectToAction("Index");
 
 
             }
