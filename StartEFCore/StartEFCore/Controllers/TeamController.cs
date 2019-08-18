@@ -53,10 +53,89 @@ namespace StartEFCore.Controllers
         }
 
         // TODO: Id'si eşit olan takımın bilgilerini güncelle (update)
+        public IActionResult Edit(int id)
+        {
+            var model = _context.Teams.Find(id);
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult Edit(int id, Team model)
+        {
+            // id ile model id bir birine esit mi
+            // model.Id'ye sahip bir veri hala var mi?
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+            // model validasyonu dogruysa
+            if (ModelState.IsValid)
+            {
+                // try
+                try
+                {
+                    _context.Teams.Update(model);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    if (_context.Teams.Find(model.Id) == null)
+                    {
+                        return NotFound();
+
+                    }
+                    throw (ex);
+                }
+                // catch(DBConcurrencyException ex)
+            }
+            // model valid degilse
+            return View(model);
+        }
 
         // TODO: Id'si eşit olan takımı sil (delete)
-        // Delete yapılırken takıma ait oyuncu var mı kontrol et
-        // yoksa sil
-        // varsa silme
+        public IActionResult Delete(int id)
+        {
+            var model = _context.Teams.Find(id);
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id, Team model)
+        {
+            // id ile model id bir birine esit mi
+            // model.Id'ye sahip bir veri hala var mi?
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+            // model validasyonu dogruysa
+
+            // try
+            try
+            {
+
+                // Delete yapılırken takıma ait oyuncu var mı kontrol et
+                // yoksa sil
+                // varsa silme
+                if (_context.Players.Where(x => x.TeamId == model.Id).Any())
+                {
+                    return NotFound();
+                }
+                //var willDeleteTeam = _context.Teams.Find(model.Id);
+                _context.Teams.Remove(model);
+                _context.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                if (_context.Teams.Find(model.Id) == null)
+                {
+                    return NotFound();
+                }
+                throw (ex);
+            }
+        }
+
     }
 }

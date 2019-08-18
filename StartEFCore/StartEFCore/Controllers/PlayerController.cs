@@ -111,14 +111,15 @@ namespace StartEFCore.Controllers
             _context.SaveChanges();
         }
         // TODO: Id'si eşit olan oyuncuyu sil (delete)
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, string returnUrl = "")
         {
+            ViewBag.ReturnUrl = string.IsNullOrEmpty(returnUrl) ? "" : returnUrl;
             Player model = _context.Players.Find(id);
             return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id, Player model)
+        public IActionResult Delete(int id, Player model, string returnUrl = "")
         {
             if (_context.Players.Find(model.Id) == null || id != model.Id)
             {
@@ -131,7 +132,11 @@ namespace StartEFCore.Controllers
                 _context.SaveChanges();
                 //return RedirectToAction("TeamPlayers",
                 //    new { id = player.TeamId });
-
+                if (!string.IsNullOrEmpty(returnUrl)
+                    && Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
                 return RedirectToAction("Index");
 
 
