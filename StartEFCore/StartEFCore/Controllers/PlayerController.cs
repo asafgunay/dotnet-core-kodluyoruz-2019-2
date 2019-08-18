@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using StartEFCore.Entityframework;
 using StartEFCore.Models;
 
@@ -50,14 +52,63 @@ namespace StartEFCore.Controllers
                 _context.Players.Add(model);
                 // contextteki tum degisiklikleri kaydet
                 _context.SaveChanges();
+
+                return RedirectToAction("TeamPlayers", new { id = model.TeamId });
             }
             return View(model);
         }
 
         // TODO: Id'si eşit olan oyuncunun bilgileri (detail)
+        public IActionResult Details(int id)
+        {
+            Player model = _context.Players.Find(id);
+            return View(model);
+        }
 
         // TODO: Id'si eşit olan oyuncunun bilgilerini güncelle (update)
+        public IActionResult Edit(int id)
+        {
+            Player model = _context.Players.Find(id);
+            ViewBag.TeamsDDL = _context.Teams.Select(u => new SelectListItem
+            {
+                Selected = false,
+                Text = u.Name,
+                Value = u.Id.ToString()
+            }).ToList();
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Player model)
+        {
+            if (id != model.Id)
+                return NotFound();
+            if (ModelState.IsValid)
+            {
+                // context ile guncelleme
+                try
+                {
+                    TryToUpdatePlayer(model);
+                    // return RedirectToAction("Edit", new {id = id });
+                    return RedirectToAction("Edit", new { id });
+                }
+                catch (DBConcurrencyException ex)
+                {
+                    if (_context.Players.Find(id) == null)
+                        return NotFound();
+                    throw (ex);
+                }
 
+            }
+            return View(model);
+        }
+
+        // void method hic birsey donmez
+        private void TryToUpdatePlayer(Player model)
+        {
+            _context.Players.Update(model);
+            _context.SaveChanges();
+        }
         // TODO: Id'si eşit olan oyuncuyu sil (delete)
     }
 }
