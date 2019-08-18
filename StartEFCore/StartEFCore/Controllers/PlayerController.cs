@@ -110,5 +110,35 @@ namespace StartEFCore.Controllers
             _context.SaveChanges();
         }
         // TODO: Id'si eşit olan oyuncuyu sil (delete)
+        public IActionResult Delete(int id)
+        {
+            Player model = _context.Players.Find(id);
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id, Player model)
+        {
+            if (_context.Players.Find(model.Id) == null || id != model.Id)
+            {
+                return NotFound();
+            }
+            try
+            {
+                Player player = _context.Players.Find(model.Id);
+                _context.Players.Remove(player);
+                _context.SaveChanges();
+                return RedirectToAction("TeamPlayers",
+                    new { id = player.TeamId });
+
+
+            }
+            catch (DBConcurrencyException ex)
+            {
+                throw (ex);
+            }
+
+        }
+
     }
 }
