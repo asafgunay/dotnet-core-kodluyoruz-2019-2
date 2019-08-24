@@ -27,10 +27,16 @@ namespace StartEFCore.Migrations
 
                     b.Property<int?>("Age");
 
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("HiddenValue");
+
                     b.Property<string>("ImageUrl");
 
                     b.Property<string>("LongName")
                         .IsRequired();
+
+                    b.Property<DateTime?>("ModifiedDate");
 
                     b.Property<int>("Number");
 
@@ -52,8 +58,14 @@ namespace StartEFCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("HiddenValue");
+
                     b.Property<string>("LogoUrl")
                         .IsRequired();
+
+                    b.Property<DateTime?>("ModifiedDate");
 
                     b.Property<string>("Name")
                         .IsRequired();

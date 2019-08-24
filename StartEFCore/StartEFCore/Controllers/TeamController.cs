@@ -73,8 +73,14 @@ namespace StartEFCore.Controllers
                 // try
                 try
                 {
-                    model.ModifiedDate = DateTime.UtcNow;
-                    _context.Teams.Update(model);
+                    Team willUpdate = _context.Teams.Find(model.Id);
+                    willUpdate.Name = model.Name;
+                    willUpdate.Province = model.Province;
+                    willUpdate.HiddenValue = model.HiddenValue;
+                    willUpdate.LogoUrl = model.LogoUrl;
+                    willUpdate.Year = model.Year;
+                    willUpdate.ModifiedDate = DateTime.UtcNow;
+                    //_context.Teams.Update(model);
                     _context.SaveChanges();
                     return RedirectToAction("Index");
                 }
