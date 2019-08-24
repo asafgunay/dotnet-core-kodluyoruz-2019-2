@@ -16,6 +16,9 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.HiddenValue)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.LogoUrl)
             </th>
             <th>
@@ -32,6 +35,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HiddenValue)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LogoUrl)
