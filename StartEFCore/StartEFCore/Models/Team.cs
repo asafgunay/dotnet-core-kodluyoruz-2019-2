@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StartEFCore.Models.Shared;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace StartEFCore.Models
 {
-    public class Team
+    public class Team : Entity<int>
     {
-        // [Key]
-        public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
         [Required]
@@ -20,5 +20,7 @@ namespace StartEFCore.Models
         public int? Year { get; set; }
 
         public virtual ICollection<Player> Players { get; set; }
+
+
     }
 }

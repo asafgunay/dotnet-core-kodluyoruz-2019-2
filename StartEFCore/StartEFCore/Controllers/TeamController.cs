@@ -73,6 +73,7 @@ namespace StartEFCore.Controllers
                 // try
                 try
                 {
+                    model.ModifiedDate = DateTime.UtcNow;
                     _context.Teams.Update(model);
                     _context.SaveChanges();
                     return RedirectToAction("Index");

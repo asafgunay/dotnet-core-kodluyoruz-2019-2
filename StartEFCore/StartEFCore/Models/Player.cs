@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StartEFCore.Models.Shared;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace StartEFCore.Models
 {
-    public class Player
+    public class Player : Entity
     {
-        public int Id { get; set; }
         [Required]
         public string LongName { get; set; }
         public int? Age { get; set; }
@@ -21,5 +21,6 @@ namespace StartEFCore.Models
         public virtual int? TeamId { get; set; }
         [ForeignKey("TeamId")]
         public virtual Team Team { get; set; }
+
     }
 }
