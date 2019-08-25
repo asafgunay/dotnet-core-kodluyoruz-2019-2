@@ -32,7 +32,7 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
-**/**/Migrations/**
+
 
 # Visual Studio 2015
 .vs/
@@ -42,3 +42,4 @@ msbuild.wrn
 /StartEFCore/StartEFCore/Migrations/20190824074634_DetectChanges.Designer.cs
 /StartEFCore/StartEFCore/Migrations/20190824074905_DetectChanges2.cs
 /StartEFCore/StartEFCore/Migrations/20190824074905_DetectChanges2.Designer.cs
+/StartEFCore/StartEFCore/Migrations/*
