@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StartEFCore.Data;
 using StartEFCore.Entityframework;
-using StartEFCore.Models;
 
 namespace StartEFCore.Controllers
 {

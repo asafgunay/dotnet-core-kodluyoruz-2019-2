@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StartEFCore.Data;
 using StartEFCore.Entityframework;
-using StartEFCore.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

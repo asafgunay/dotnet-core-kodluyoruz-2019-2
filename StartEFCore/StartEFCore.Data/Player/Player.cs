@@ -1,12 +1,10 @@
-﻿using StartEFCore.Models.Shared;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace StartEFCore.Models
+namespace StartEFCore.Data
 {
     public class Player : Entity
     {
@@ -32,6 +30,5 @@ namespace StartEFCore.Models
         [ForeignKey("TeamId")]
         [Display(Name = "Takım")]
         public virtual Team Team { get; set; }
-
     }
 }

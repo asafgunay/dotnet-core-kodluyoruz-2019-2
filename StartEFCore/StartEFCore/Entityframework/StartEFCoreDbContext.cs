@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StartEFCore.Models;
+using StartEFCore.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;

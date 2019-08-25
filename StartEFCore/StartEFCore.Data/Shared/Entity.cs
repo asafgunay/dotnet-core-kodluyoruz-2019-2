@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace StartEFCore.Models.Shared
+namespace StartEFCore.Data
 {
     // generic base class
     public class Entity<T> : CommonEntity
@@ -23,11 +22,11 @@ namespace StartEFCore.Models.Shared
     // non generic base class fields
     public class CommonEntity
     {
-        [Display(Name ="Oluşturma Tarihi")]
+        [Display(Name = "Oluşturma Tarihi")]
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
-        [Display(Name ="Son Güncelleme")]
+        [Display(Name = "Son Güncelleme")]
         public DateTime? ModifiedDate { get; set; }
-        [Display(Name ="Gizli Alan")]
+        [Display(Name = "Gizli Alan")]
         public string HiddenValue { get; set; }
     }
 }
