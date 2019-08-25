@@ -7,6 +7,6 @@ namespace DotNetCoreIdentity.Domain.Identity
 {
     public class ApplicationUser :IdentityUser
     {
-        public int NationalIdNumber { get; set; }
+        public int? NationalIdNumber { get; set; }
     }
 }

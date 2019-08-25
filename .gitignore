@@ -43,3 +43,4 @@ msbuild.wrn
 /StartEFCore/StartEFCore/Migrations/20190824074905_DetectChanges2.cs
 /StartEFCore/StartEFCore/Migrations/20190824074905_DetectChanges2.Designer.cs
 /StartEFCore/StartEFCore/Migrations/*.*
+/DotNetCoreIdentity/src/DotNetCoreIdentity.EF/Migrations
