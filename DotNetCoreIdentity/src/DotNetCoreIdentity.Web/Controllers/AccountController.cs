@@ -29,9 +29,34 @@ namespace DotNetCoreIdentity.Web.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            return View();
+            // gelen modeli dogrula
+            if (ModelState.IsValid)
+            {
+                // model dogruysa
+                // kullaniyi kontrol et var mi?
+                var existUser = await _userManager.FindByEmailAsync(model.Username);
+                // yoksa hata don
+                if (existUser == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Bu email ile kayitli bir kullanıcı bulunamadi!");
+                    return View(model);
+                }
+                // kullanici adi ve sifre eslesiyor mu?
+                var login = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
+                // eslesmiyorsa hata don
+                if (!login.Succeeded)
+                {
+                    ModelState.AddModelError(string.Empty, "Bu email ve sifre ile uyumlu bir kullanıcı bulunamadi! Sifrenizi kontrol edin!");
+                    return View(model);
+                }
+
+                // ana sayfaya yonlendir (simdilik)
+                return RedirectToAction("Index", "Home");
+            }
+            // basarili degilse hata don
+            return View(model);
         }
         public IActionResult Register()
         {
@@ -50,8 +75,8 @@ namespace DotNetCoreIdentity.Web.Controllers
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    // FirstName = model.FirstName,
-                    // LastName = model.LastName,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
                     EmailConfirmed = true,
                     TwoFactorEnabled = false,
                     NationalIdNumber = model.NationalIdNumber
