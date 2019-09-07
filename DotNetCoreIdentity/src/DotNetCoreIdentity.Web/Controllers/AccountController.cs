@@ -45,9 +45,26 @@ namespace DotNetCoreIdentity.Web.Controllers
             {
                 // validse kaydet
 
-                // kaydetme basarisizsa
-                // hatalari modelstate e ekle
-                // AddErrors()
+                // ApplicationUser olustur
+                var newUser = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    // FirstName = model.FirstName,
+                    // LastName = model.LastName,
+                    EmailConfirmed = true,
+                    TwoFactorEnabled = false,
+                    NationalIdNumber = model.NationalIdNumber
+                };
+
+                var registerUser = await _userManager.CreateAsync(newUser, model.Password);
+                if (registerUser.Succeeded)
+                {
+                    await _signInManager.SignInAsync(newUser, isPersistent: false);
+                    return RedirectToAction("Index", "Home");
+                }
+                // kaydetme basarisizsa hatalari modelstate e ekle
+                AddErrors(registerUser);
 
             }
             // degilse hatalari don
