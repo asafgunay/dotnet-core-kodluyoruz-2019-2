@@ -113,7 +113,7 @@ namespace DotNetCoreIdentity.Web.Controllers
         {
             List<SelectListItem> roleList = _roleManager.Roles
                 .Select(x => new SelectListItem
-            {
+                {
                     Value = x.Id,
                     Text = x.Name,
                     Selected = false
@@ -131,7 +131,24 @@ namespace DotNetCoreIdentity.Web.Controllers
         [Route("Roles/Assign/{userId}")]
         public async Task<IActionResult> AssignRole(AssignRoleViewModel model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByIdAsync(model.UserId);
+                var role = await _roleManager.FindByIdAsync(model.RoleId);
+                var assignRole = await _userManager.AddToRoleAsync(user, role.Name);
+                if (assignRole.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Kayıt esnasında bir hata oluştu!");
+                    var roleAssignationErrors = assignRole.Errors.Select(x => x.Description);
+                    ModelState.AddModelError(string.Empty,
+                        string.Join(", ", roleAssignationErrors));
+                }
+            }
+            return View(model);
         }
         [Route("Roles/Revoke/{userId}/{roleId}")]
         public IActionResult RevokeRole(string userId, string roleId)
