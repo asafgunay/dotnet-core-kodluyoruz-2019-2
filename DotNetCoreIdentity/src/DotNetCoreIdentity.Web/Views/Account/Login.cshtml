@@ -24,6 +24,7 @@
             </div>
             <span asp-validation-for="RememberMe" class="text-danger"></span>
         </div>
+        <input type="hidden" name="returnUrl" id="returnUrl" value="@ViewBag.ReturnUrl" />
         <div class="form-group">
             <input type="submit" value="Giriş" class="btn btn-primary" />
         </div>

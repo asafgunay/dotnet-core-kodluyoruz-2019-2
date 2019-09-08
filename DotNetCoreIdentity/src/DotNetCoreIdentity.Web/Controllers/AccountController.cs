@@ -24,12 +24,13 @@ namespace DotNetCoreIdentity.Web.Controllers
             _signInManager = signInManager;
         }
 
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl = null)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             // gelen modeli dogrula
             if (ModelState.IsValid)
@@ -53,6 +54,10 @@ namespace DotNetCoreIdentity.Web.Controllers
                 }
 
                 // ana sayfaya yonlendir (simdilik)
+
+                if (!String.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    return Redirect(returnUrl);
+
                 return RedirectToAction("Index", "Home");
             }
             // basarili degilse hata don
@@ -102,6 +107,13 @@ namespace DotNetCoreIdentity.Web.Controllers
             {
                 ModelState.AddModelError(string.Empty, err.Description);
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

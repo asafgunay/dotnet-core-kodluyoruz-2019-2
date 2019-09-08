@@ -36,8 +36,15 @@ namespace DotNetCoreIdentity.Web
                 ));
 
             // kullanici arayuzu hazir bir arayuz
-            services.AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<ApplicationUserDbContext>();
+            //services.AddDefaultIdentity<ApplicationUser>()
+            //    .AddEntityFrameworkStores<ApplicationUserDbContext>();
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationUserDbContext>();
+
+            services
+                .ConfigureApplicationCookie(options =>
+                options.LoginPath = "/Account/Login");
 
             // kullanici olusturulurken kullanilacak kurallar
 
