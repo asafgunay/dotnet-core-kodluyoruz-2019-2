@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DotNetCoreIdentity.Web.Controllers
 {
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [Route("Manage")]
     public class ManageController : Controller
     {
@@ -214,6 +214,5 @@ namespace DotNetCoreIdentity.Web.Controllers
             }
             return View(model);
         }
-
     }
 }

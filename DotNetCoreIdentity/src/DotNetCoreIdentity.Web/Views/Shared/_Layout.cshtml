@@ -34,6 +34,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Manage" asp-action="Index">Yönetim</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <partial name="_LoginPartial" />
