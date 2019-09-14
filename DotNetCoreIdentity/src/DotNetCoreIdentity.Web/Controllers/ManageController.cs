@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DotNetCoreIdentity.Domain.Identity;
+using DotNetCoreIdentity.Domain.RolesClaims;
 using DotNetCoreIdentity.Web.ViewModels.Manage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -120,13 +121,47 @@ namespace DotNetCoreIdentity.Web.Controllers
             return View(model);
         }
         [Route("Roles/Edit/{id}")]
-        public IActionResult EditRole(string id)
+        public async Task<IActionResult> EditRole(string id)
         {
-            return View();
+            ViewBag.IsRoleEditable = await CheckRoleIsEditable(id);
+            var role = await _roleManager.FindByIdAsync(id);
+            RoleViewModel model = new RoleViewModel
+            {
+                Id = role.Id,
+                Name = role.Name
+            };
+            return View(model);
         }
         [Route("Roles/Edit/{id}")]
+        [HttpPost]
+        public async Task<IActionResult> EditRole(RoleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                bool isRoleEditable = await CheckRoleIsEditable(model.Id);
+                if (!isRoleEditable)
+                {
+                    ModelState.AddModelError(string.Empty, "Düzenlenmesine izin verilmeyen bir role işlem yapamazsınız!");
+                    ViewBag.IsRoleEditable = isRoleEditable;
+                    return View(model);
+                }
+                var updatedRole = await _roleManager.FindByIdAsync(model.Id);
+                updatedRole.Name = model.Name;
+                updatedRole.NormalizedName = model.Name.ToUpperInvariant();
+                var update = await _roleManager.UpdateAsync(updatedRole);
+                if (update.Succeeded)
+                {
+                    return RedirectToAction("Roles", "Manage");
+                }
+            }
+            ViewBag.IsRoleEditable = true;
+            ModelState.AddModelError(string.Empty, "Eyvah! Bir hata oluştu..");
+            return View(model);
+        }
+        [Route("Roles/Delete/{id}")]
         public IActionResult DeleteRole(string id)
         {
+            // sistem rolu veya bu role sahip kayitli biri var mi kontrol edin 
             return View();
         }
         [HttpGet]
@@ -213,6 +248,13 @@ namespace DotNetCoreIdentity.Web.Controllers
                 ModelState.AddModelError(string.Empty, "Bir hata oluştu, lütfen tekrar deneyiniz!");
             }
             return View(model);
+        }
+
+
+        private async Task<bool> CheckRoleIsEditable(string roleId)
+        {
+            var role = await _roleManager.FindByIdAsync(roleId);
+            return !Enum.GetNames(typeof(SystemRoles)).Contains(role.Name);
         }
     }
 }
