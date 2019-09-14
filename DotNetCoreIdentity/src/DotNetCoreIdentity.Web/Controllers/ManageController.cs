@@ -194,13 +194,25 @@ namespace DotNetCoreIdentity.Web.Controllers
             {
                 model.RoleList = new List<SelectListItem>();
             }
-           
+
             return View(model);
         }
         [HttpPost]
+        [Route("Roles/Revoke/{userId}")]
         public async Task<IActionResult> RevokeRole(AssignRoleViewModel model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByIdAsync(model.UserId);
+                var role = await _roleManager.FindByIdAsync(model.RoleId);
+                var result = await _userManager.RemoveFromRoleAsync(user, role.Name);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("UserDetail", new { userId = model.UserId });
+                }
+                ModelState.AddModelError(string.Empty, "Bir hata oluştu, lütfen tekrar deneyiniz!");
+            }
+            return View(model);
         }
 
     }
