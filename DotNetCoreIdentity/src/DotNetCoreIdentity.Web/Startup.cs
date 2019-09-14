@@ -36,7 +36,7 @@ namespace DotNetCoreIdentity.Web
                 ));
 
             // kullanici arayuzu hazir bir arayuz
-            //services.AddDefaultIdentity<ApplicationUser>()
+            //services.AddDefaultIdentity<ApplicationUser>() 
             //    .AddEntityFrameworkStores<ApplicationUserDbContext>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()

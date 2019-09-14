@@ -42,12 +42,13 @@
                 </td>
                 <td>
                     <a asp-controller="Manage" asp-action="AssignRole" class="btn-sm btn-outline-primary" asp-route-userId="@item.Id">Rol ata</a>
+                    <a asp-controller="Manage" asp-action="RevokeRole" class="btn-sm btn-outline-primary" asp-route-userId="@item.Id">Rolden çıkar</a>
                     <a asp-controller="Manage" asp-action="UserDetail" class="btn-sm btn-outline-primary" asp-route-userId="@item.Id">Detay</a>
 
 
                     @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
                 </td>
             </tr>
         }

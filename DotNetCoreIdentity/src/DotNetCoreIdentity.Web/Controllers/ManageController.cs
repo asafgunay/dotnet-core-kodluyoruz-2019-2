@@ -172,8 +172,33 @@ namespace DotNetCoreIdentity.Web.Controllers
             }
             return View(model);
         }
-        [Route("Roles/Revoke/{userId}/{roleId}")]
-        public IActionResult RevokeRole(string userId, string roleId)
+        [Route("Roles/Revoke/{userId}")]
+        public async Task<IActionResult> RevokeRole(string userId)
+        {
+            AssignRoleViewModel model = new AssignRoleViewModel();
+            model.UserId = userId;
+
+            var user = await _userManager.FindByIdAsync(userId);
+            var userRolesStrList = await _userManager.GetRolesAsync(user);
+            if (userRolesStrList.Any())
+            {
+                var userRoles = _roleManager.Roles.Where(x => userRolesStrList.Contains(x.Name)).ToList();
+                model.RoleList = userRoles.Select(x => new SelectListItem
+                {
+                    Selected = false,
+                    Text = x.Name,
+                    Value = x.Id
+                }).ToList();
+            }
+            else
+            {
+                model.RoleList = new List<SelectListItem>();
+            }
+           
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> RevokeRole(AssignRoleViewModel model)
         {
             return View();
         }
