@@ -159,26 +159,78 @@ namespace DotNetCoreIdentity.Web.Controllers
             return View(model);
         }
         [Route("Roles/Delete/{id}")]
-        public IActionResult DeleteRole(string id)
+        public async Task<IActionResult> DeleteRole(string id)
         {
+            var role = await _roleManager.FindByIdAsync(id);
+            ViewBag.ErrorMessage = string.Empty;
             // Herhangi bir kullanici bu role sahip mi veya bu bir sistem rolümü kontrol et
+            bool isEditableRole = await CheckRoleIsEditable(id);
+            if (!isEditableRole)
+            {
+                // hata mesajini ilet
+                ViewBag.ErrorMessage = "Bu bir sistem rolüdür silinemez";
+            }
+            else
+            {
+
+                var usersInThisRole = await _userManager.GetUsersInRoleAsync(role.Name);
+                if (usersInThisRole.Any())
+                {
+                    // hata mesajini ilet
+                    string[] usersHas = usersInThisRole.Select(x => x.UserName).ToArray();
+                    var usersInThisRoleCommaSeperated = string.Join(", ", usersHas);
+                    ViewBag.ErrorMessage = $"Bu role sahip kullanicilar var: {usersInThisRoleCommaSeperated}";
+                }
+            }
             // silinecek rolü roleManager'dan model değişkenine ata ve return View(model) yap
-            return View();
+            var model = new RoleViewModel
+            {
+                Id = role.Id,
+                Name = role.Name
+            };
+            return View(model);
         }
         [HttpPost]
         [Route("Roles/Delete/{id}")]
         public async Task<IActionResult> DeleteRole(string id, RoleViewModel model)
         {
             // Herhangi bir kullanici bu role sahip mi veya bu bir sistem rolümü kontrol et
+            var role = await _roleManager.FindByIdAsync(model.Id);
+            model.Name = role.Name;
+            ViewBag.ErrorMessage = string.Empty;
+            bool hasError = false;
+            bool isEditableRole = await CheckRoleIsEditable(id);
+            if (!isEditableRole)
+            {
+                // hata mesajini ilet
+                ViewBag.ErrorMessage = "Bu bir sistem rolüdür silinemez";
+                hasError = true;
+            }
+            else
+            {
 
-            // sistem rolü ise AddModelError ile hata mesajı gönder
-            // kullanıcı varsa AddModelError ile hata mesajı gönder
-            
+                var usersInThisRole = await _userManager.GetUsersInRoleAsync(role.Name);
+                if (usersInThisRole.Any())
+                {
+                    // hata mesajini ilet
+                    string[] usersHas = usersInThisRole.Select(x => x.UserName).ToArray();
+                    var usersInThisRoleCommaSeperated = string.Join(", ", usersHas);
+                    ViewBag.ErrorMessage = $"Bu role sahip kullanicilar var: {usersInThisRoleCommaSeperated}";
+                    hasError = true;
+                }
+            }
 
-            // rolü sil
-            // başarılıysa kullanıcı listesine gönder
-
-
+            if (!hasError)
+            {
+                // rolü sil
+                var result = await _roleManager.DeleteAsync(role);
+                if (result.Succeeded)
+                {
+                    // başarılıysa rol listesine gönder
+                    return RedirectToAction("Roles");
+                }
+                ModelState.AddModelError(string.Empty, "Bir hata oluştu tekrar deneyin");
+            }
             return View(model);
         }
         [HttpGet]
