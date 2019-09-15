@@ -320,6 +320,49 @@ namespace DotNetCoreIdentity.Web.Controllers
         }
 
 
+        // Role detayi
+        // Rolun adi ve idsi
+        // ViewBag.UsersInRole icinde bu role sahip olan kullanicilar
+        [Route("Roles/{roleId}")]
+        public async Task<IActionResult> RoleDetail(string roleId)
+        {
+            ViewBag.UsersInRole = string.Empty;
+            // bu id'ye ait rol var mi onu kontrol et
+            var role = await _roleManager.FindByIdAsync(roleId);
+            if (role == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            // varsa rolu alalim
+            // RoleViewModele donusturelim
+            RoleViewModel model = new RoleViewModel
+            {
+                Id = role.Id,
+                Name = role.Name
+            };
+            // Bu role sahip kullanicilar var mi kontrol edelim
+            var usersInRole = await _userManager.GetUsersInRoleAsync(role.Name);
+            // varsa ViewBag.UsersInRole string.Join ile atacagiz
+            if (usersInRole.Any())
+            {
+                string[] usersArr = usersInRole.Select(x => x.UserName).ToArray();
+                string usersMsg = string.Join(", ", usersArr);
+                ViewBag.UsersInRole = "Bu role sahip kullanicilar: " + usersMsg;
+            }
+            else
+            {
+                ViewBag.UsersInRole = "Bu role sahip herhangi bir kullanici bulunamadi!";
+            }
+            // yoksa ViewBag.UsersInRole icerisine "bu role sahip bir kullanici yok" mesaji yerlestirecegiz
+
+            return View(model);
+        }
+
+
+
+
+
+
         private async Task<bool> CheckRoleIsEditable(string roleId)
         {
             var role = await _roleManager.FindByIdAsync(roleId);
