@@ -8,4 +8,8 @@
     <Folder Include="PostService\Dtos\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetCoreIdentity.EF\DotNetCoreIdentity.EF.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DotNetCoreIdentity.Application;
 using DotNetCoreIdentity.Domain.Identity;
 using DotNetCoreIdentity.EF.Context;
 using Microsoft.AspNetCore.Builder;
@@ -65,8 +66,7 @@ namespace DotNetCoreIdentity.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
