@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DotNetCoreIdentity.Application.CategoryServices.Dtos;
 using DotNetCoreIdentity.Domain.Identity;
 using DotNetCoreIdentity.Domain.PostTypes;
 using DotNetCoreIdentity.EF.Context;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace DotNetCoreIdentity.Application
 {
@@ -25,6 +28,9 @@ namespace DotNetCoreIdentity.Application
             try
             {
                 var user = await _userManager.FindByIdAsync(input.CreatedById);
+                // AutoMapper ile Category sinifini CreateCategoryInput ile olusturabiliriz.
+                // Category catMapper = AutoMapper.Mapper.Map<Category>(input);
+                // Category catMapper = Mapper.Map<Category>(input);
                 Category category = new Category
                 {
                     Name = input.Name,
@@ -37,6 +43,7 @@ namespace DotNetCoreIdentity.Application
                 await _context.SaveChangesAsync();
                 ApplicationResult<CategoryDto> result = new ApplicationResult<CategoryDto>();
                 // haftaya bu kod yokalacak yerine automapper metodu gelecek!
+                // AutoMapper ile Category sinifini CategoryDto sinifina donusturebiliriz.
                 result.Result = new CategoryDto
                 {
                     CreatedById = category.CreatedById,
@@ -49,7 +56,7 @@ namespace DotNetCoreIdentity.Application
                 result.Succeeded = true;
                 return result;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ApplicationResult<CategoryDto> result = new ApplicationResult<CategoryDto>();
                 result.Succeeded = false;
@@ -57,7 +64,7 @@ namespace DotNetCoreIdentity.Application
                 return result;
             }
 
-            
+
         }
 
         public Task<ApplicationResult> Delete(int Id)
@@ -65,14 +72,71 @@ namespace DotNetCoreIdentity.Application
             throw new NotImplementedException();
         }
 
-        public Task<ApplicationResult<CategoryDto>> Get(int Id)
+        public async Task<ApplicationResult<CategoryDto>> Get(int Id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Category category = await _context.Categories.FindAsync(Id);
+                CategoryDto dto = new CategoryDto
+                {
+                    CreatedBy = category.CreatedBy,
+                    CreatedById = category.CreatedById,
+                    CreatedDate = category.CreatedDate,
+                    Id = category.Id,
+                    ModifiedBy = category.ModifiedBy,
+                    ModifiedById = category.ModifiedById,
+                    ModifiedDate = category.ModifiedDate,
+                    Name = category.Name,
+                    UrlName = category.UrlName
+                };
+                return new ApplicationResult<CategoryDto>
+                {
+                    Result = dto,
+                    Succeeded = true
+                };
+            }
+            catch (Exception e)
+            {
+                return new ApplicationResult<CategoryDto>
+                {
+                    Result = new CategoryDto(),
+                    Succeeded = false
+                };
+            }
+
         }
 
-        public Task<ApplicationResult<List<CategoryDto>>> GetAll()
+        public async Task<ApplicationResult<List<CategoryDto>>> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<CategoryDto> list = await _context.Categories.Select(category => new CategoryDto
+                {
+                    CreatedBy = category.CreatedBy,
+                    CreatedById = category.CreatedById,
+                    CreatedDate = category.CreatedDate,
+                    Id = category.Id,
+                    ModifiedBy = category.ModifiedBy,
+                    ModifiedById = category.ModifiedById,
+                    ModifiedDate = category.ModifiedDate,
+                    Name = category.Name,
+                    UrlName = category.UrlName
+                }).ToListAsync();
+                return new ApplicationResult<List<CategoryDto>>
+                {
+                    Result = list,
+                    Succeeded = true
+                };
+
+            }
+            catch (Exception e)
+            {
+                return new ApplicationResult<List<CategoryDto>>
+                {
+                    Result = new List<CategoryDto>(),
+                    Succeeded = false
+                };
+            }
         }
 
         public Task<ApplicationResult<CategoryDto>> Update(UpdateCategoryInput input)
