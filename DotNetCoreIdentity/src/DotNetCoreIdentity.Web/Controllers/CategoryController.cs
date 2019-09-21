@@ -70,5 +70,38 @@ namespace DotNetCoreIdentity.Web.Controllers
             }
             return View(model);
         }
+
+        public async Task<IActionResult> Update(int id)
+        {
+            var getService = await _categoryService.Get(id);
+            UpdateCategoryInput input = new UpdateCategoryInput
+            {
+                Id = getService.Result.Id,
+                CreatedById = getService.Result.CreatedById,
+                ModifiedById = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                Name = getService.Result.Name,
+                UrlName = getService.Result.UrlName
+            };
+            return View(input);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, UpdateCategoryInput model)
+        {
+            if (ModelState.IsValid)
+            {
+                var getService = await _categoryService.Get(id);
+                model.CreatedById = getService.Result.CreatedById;
+                model.Id = getService.Result.Id;
+                model.ModifiedById = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var updateService = await _categoryService.Update(model);
+                if (updateService.Succeeded)
+                {
+                    return RedirectToAction("Details", new { id });
+                }
+                ModelState.AddModelError(string.Empty, "Bir hata olustu!");
+
+            }
+            return View(model);
+        }
     }
 }

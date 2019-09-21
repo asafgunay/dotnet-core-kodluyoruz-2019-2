@@ -166,9 +166,47 @@ namespace DotNetCoreIdentity.Application
             }
         }
 
-        public Task<ApplicationResult<CategoryDto>> Update(UpdateCategoryInput input)
+        public async Task<ApplicationResult<CategoryDto>> Update(UpdateCategoryInput input)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var modifierUser = await _userManager.FindByIdAsync(input.ModifiedById);
+                var getExistCategory = await _context.Categories.FindAsync(input.Id);
+                getExistCategory.Name = input.Name;
+                getExistCategory.UrlName = input.UrlName;
+                getExistCategory.ModifiedBy = modifierUser.UserName;
+                getExistCategory.ModifiedById = modifierUser.Id;
+                getExistCategory.ModifiedDate = DateTime.UtcNow;
+                _context.Update(getExistCategory);
+                await _context.SaveChangesAsync();
+
+                return new ApplicationResult<CategoryDto>
+                {
+                    Succeeded = true,
+                    Result = new CategoryDto
+                    {
+                        CreatedBy = getExistCategory.CreatedBy,
+                        CreatedById = getExistCategory.CreatedById,
+                        CreatedDate = getExistCategory.CreatedDate,
+                        Id = getExistCategory.Id,
+                        ModifiedBy = getExistCategory.ModifiedBy,
+                        ModifiedById = getExistCategory.ModifiedById,
+                        ModifiedDate = getExistCategory.ModifiedDate,
+                        Name = getExistCategory.Name,
+                        UrlName = getExistCategory.UrlName
+                    }
+                };
+            }
+            catch (Exception e)
+            {
+                return new ApplicationResult<CategoryDto>
+                {
+                    Succeeded = false,
+                    Result = new CategoryDto()
+                };
+
+            }
+
         }
     }
 }

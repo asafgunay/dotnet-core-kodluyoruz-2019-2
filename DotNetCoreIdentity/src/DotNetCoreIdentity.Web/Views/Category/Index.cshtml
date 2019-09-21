@@ -60,7 +60,7 @@
                 </td>
 
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    <a asp-action="Update" asp-controller="Category" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Düzenle</a> |
                     @*@Html.ActionLink("Details", "Details", new {  id=item.Id  })*@
                     <a asp-action="Details" asp-controller="Category" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Detay</a> |
                     <a asp-action="Delete" asp-controller="Category" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Sil</a>
