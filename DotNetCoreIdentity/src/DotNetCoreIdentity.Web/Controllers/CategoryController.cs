@@ -5,10 +5,12 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using DotNetCoreIdentity.Application;
 using DotNetCoreIdentity.Application.CategoryServices.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetCoreIdentity.Web.Controllers
 {
+    [Authorize(Roles = "Admin, Editor")]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
