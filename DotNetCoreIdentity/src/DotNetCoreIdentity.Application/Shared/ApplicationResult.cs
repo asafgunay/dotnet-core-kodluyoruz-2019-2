@@ -17,6 +17,7 @@ namespace DotNetCoreIdentity.Application
         // public DateTime RequestTime { get; set; }
         // public DateTime ResponseTime { get; set; }
         public bool Succeeded { get; set; }
+        public string ErrorMessage { get; set; }
 
     }
 }
