@@ -8,6 +8,7 @@ using DotNetCoreIdentity.Application.BlogServices.Dtos;
 using DotNetCoreIdentity.Application.CategoryServices.Dtos;
 using DotNetCoreIdentity.Domain.BlogEntries;
 using DotNetCoreIdentity.Domain.Identity;
+using DotNetCoreIdentity.Domain.PostTypes;
 using DotNetCoreIdentity.EF.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -32,32 +33,33 @@ namespace DotNetCoreIdentity.Application.BlogServices
             try
             {
                 Post post = await _context.Posts.Include(p => p.Category).FirstOrDefaultAsync(x => x.Id == id);
-                PostDto postDto = new PostDto
-                {
-                    Category = new CategoryDto
-                    {
-                        Id = post.Category.Id,
-                        CreatedBy = post.Category.CreatedBy,
-                        CreatedById = post.Category.CreatedById,
-                        CreatedDate = post.Category.CreatedDate,
-                        ModifiedBy = post.Category.ModifiedBy,
-                        ModifiedById = post.Category.ModifiedById,
-                        ModifiedDate = post.Category.ModifiedDate,
-                        Name = post.Category.Name,
-                        UrlName = post.Category.UrlName
-                    },
-                    CategoryId = post.CategoryId,
-                    Content = post.Content,
-                    CreatedBy = post.CreatedBy,
-                    CreatedById = post.CreatedById,
-                    CreatedDate = post.CreatedDate,
-                    Id = post.Id,
-                    ModifiedBy = post.ModifiedBy,
-                    ModifiedById = post.ModifiedById,
-                    ModifiedDate = post.ModifiedDate,
-                    Title = post.Title,
-                    UrlName = post.UrlName
-                };
+                PostDto postDto = _mapper.Map<PostDto>(post);
+                //PostDto postDto = new PostDto
+                //{
+                //    Category = new CategoryDto
+                //    {
+                //        Id = post.Category.Id,
+                //        CreatedBy = post.Category.CreatedBy,
+                //        CreatedById = post.Category.CreatedById,
+                //        CreatedDate = post.Category.CreatedDate,
+                //        ModifiedBy = post.Category.ModifiedBy,
+                //        ModifiedById = post.Category.ModifiedById,
+                //        ModifiedDate = post.Category.ModifiedDate,
+                //        Name = post.Category.Name,
+                //        UrlName = post.Category.UrlName
+                //    },
+                //    CategoryId = post.CategoryId,
+                //    Content = post.Content,
+                //    CreatedBy = post.CreatedBy,
+                //    CreatedById = post.CreatedById,
+                //    CreatedDate = post.CreatedDate,
+                //    Id = post.Id,
+                //    ModifiedBy = post.ModifiedBy,
+                //    ModifiedById = post.ModifiedById,
+                //    ModifiedDate = post.ModifiedDate,
+                //    Title = post.Title,
+                //    UrlName = post.UrlName
+                //};
 
                 return new ApplicationResult<PostDto>
                 {
@@ -80,32 +82,34 @@ namespace DotNetCoreIdentity.Application.BlogServices
         {
             try
             {
-                List<PostDto> list = await _context.Posts.Select(post => new PostDto
-                {
-                    Category = new CategoryDto
-                    {
-                        Id = post.Category.Id,
-                        CreatedBy = post.Category.CreatedBy,
-                        CreatedById = post.Category.CreatedById,
-                        CreatedDate = post.Category.CreatedDate,
-                        ModifiedBy = post.Category.ModifiedBy,
-                        ModifiedById = post.Category.ModifiedById,
-                        ModifiedDate = post.Category.ModifiedDate,
-                        Name = post.Category.Name,
-                        UrlName = post.Category.UrlName
-                    },
-                    CategoryId = post.CategoryId,
-                    Content = post.Content,
-                    CreatedBy = post.CreatedBy,
-                    CreatedById = post.CreatedById,
-                    CreatedDate = post.CreatedDate,
-                    Id = post.Id,
-                    ModifiedBy = post.ModifiedBy,
-                    ModifiedById = post.ModifiedById,
-                    ModifiedDate = post.ModifiedDate,
-                    Title = post.Title,
-                    UrlName = post.UrlName
-                }).ToListAsync();
+                List<Post> listRaw = await _context.Posts.ToListAsync();
+                List<PostDto> list = _mapper.Map<List<PostDto>>(listRaw);
+                //List<PostDto> list = await _context.Posts.Select(post => new PostDto
+                //{
+                //    Category = new CategoryDto
+                //    {
+                //        Id = post.Category.Id,
+                //        CreatedBy = post.Category.CreatedBy,
+                //        CreatedById = post.Category.CreatedById,
+                //        CreatedDate = post.Category.CreatedDate,
+                //        ModifiedBy = post.Category.ModifiedBy,
+                //        ModifiedById = post.Category.ModifiedById,
+                //        ModifiedDate = post.Category.ModifiedDate,
+                //        Name = post.Category.Name,
+                //        UrlName = post.Category.UrlName
+                //    },
+                //    CategoryId = post.CategoryId,
+                //    Content = post.Content,
+                //    CreatedBy = post.CreatedBy,
+                //    CreatedById = post.CreatedById,
+                //    CreatedDate = post.CreatedDate,
+                //    Id = post.Id,
+                //    ModifiedBy = post.ModifiedBy,
+                //    ModifiedById = post.ModifiedById,
+                //    ModifiedDate = post.ModifiedDate,
+                //    Title = post.Title,
+                //    UrlName = post.UrlName
+                //}).ToListAsync();
 
 
                 return new ApplicationResult<List<PostDto>>
