@@ -14,6 +14,15 @@ namespace DotNetCoreIdentity.Web.Controllers
         {
             _postService = postService;
         }
-        public IActionResult Index() => View();
+        // liste
+        public IActionResult Index()
+        {
+            return View();
+        }
+        public async Task<IActionResult> Create()
+        {
+            return View();
+
+        }
     }
 }

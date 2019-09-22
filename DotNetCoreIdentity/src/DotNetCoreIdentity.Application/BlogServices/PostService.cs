@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -77,8 +78,52 @@ namespace DotNetCoreIdentity.Application.BlogServices
 
         public async Task<ApplicationResult<List<PostDto>>> GetAll()
         {
+            try
+            {
+                List<PostDto> list = await _context.Posts.Select(post => new PostDto
+                {
+                    Category = new CategoryDto
+                    {
+                        Id = post.Category.Id,
+                        CreatedBy = post.Category.CreatedBy,
+                        CreatedById = post.Category.CreatedById,
+                        CreatedDate = post.Category.CreatedDate,
+                        ModifiedBy = post.Category.ModifiedBy,
+                        ModifiedById = post.Category.ModifiedById,
+                        ModifiedDate = post.Category.ModifiedDate,
+                        Name = post.Category.Name,
+                        UrlName = post.Category.UrlName
+                    },
+                    CategoryId = post.CategoryId,
+                    Content = post.Content,
+                    CreatedBy = post.CreatedBy,
+                    CreatedById = post.CreatedById,
+                    CreatedDate = post.CreatedDate,
+                    Id = post.Id,
+                    ModifiedBy = post.ModifiedBy,
+                    ModifiedById = post.ModifiedById,
+                    ModifiedDate = post.ModifiedDate,
+                    Title = post.Title,
+                    UrlName = post.UrlName
+                }).ToListAsync();
 
-            
+
+                return new ApplicationResult<List<PostDto>>
+                {
+                    Succeeded = true,
+                    Result = list
+                };
+            }
+            catch (Exception e)
+            {
+                return new ApplicationResult<List<PostDto>>
+                {
+                    ErrorMessage = e.Message,
+                    Result = new List<PostDto>(),
+                    Succeeded = false
+                };
+            }
+
         }
 
 
