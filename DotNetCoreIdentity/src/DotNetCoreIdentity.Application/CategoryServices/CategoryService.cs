@@ -17,10 +17,12 @@ namespace DotNetCoreIdentity.Application
     {
         private readonly ApplicationUserDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        public CategoryService(ApplicationUserDbContext context, UserManager<ApplicationUser> userManager)
+        private readonly IMapper _mapper;
+        public CategoryService(ApplicationUserDbContext context, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<ApplicationResult<CategoryDto>> Create(CreateCategoryInput input)
@@ -28,30 +30,25 @@ namespace DotNetCoreIdentity.Application
             try
             {
                 var user = await _userManager.FindByIdAsync(input.CreatedById);
-
-                Category category = new Category
-                {
-                    Name = input.Name,
-                    UrlName = input.UrlName,
-                    CreatedDate = DateTime.Now,
-                    CreatedById = input.CreatedById,
-                    CreatedBy = user.UserName,
-                };
-                _context.Categories.Add(category);
+                Category mapCat = _mapper.Map<Category>(input);
+                mapCat.CreatedById = input.CreatedById;
+                mapCat.CreatedBy = user.UserName;
+                _context.Categories.Add(mapCat);
                 await _context.SaveChangesAsync();
                 ApplicationResult<CategoryDto> result = new ApplicationResult<CategoryDto>
                 {
                     // haftaya bu kod yokalacak yerine automapper metodu gelecek!
                     // AutoMapper ile Category sinifini CategoryDto sinifina donusturebiliriz.
-                    Result = new CategoryDto
-                    {
-                        CreatedById = category.CreatedById,
-                        CreatedDate = category.CreatedDate,
-                        CreatedBy = category.CreatedBy,
-                        Id = category.Id,
-                        Name = category.Name,
-                        UrlName = category.UrlName
-                    },
+                    //Result = new CategoryDto
+                    //{
+                    //    CreatedById = category.CreatedById,
+                    //    CreatedDate = category.CreatedDate,
+                    //    CreatedBy = category.CreatedBy,
+                    //    Id = category.Id,
+                    //    Name = category.Name,
+                    //    UrlName = category.UrlName
+                    //},
+                    Result = _mapper.Map<CategoryDto>(mapCat),
                     Succeeded = true
                 };
 

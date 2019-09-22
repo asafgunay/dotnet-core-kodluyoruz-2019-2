@@ -6,6 +6,7 @@ using AutoMapper;
 using DotNetCoreIdentity.Application;
 using DotNetCoreIdentity.Application.BlogServices;
 using DotNetCoreIdentity.Application.CategoryServices.Dtos;
+using DotNetCoreIdentity.Application.Shared;
 using DotNetCoreIdentity.Domain.Identity;
 using DotNetCoreIdentity.Domain.PostTypes;
 using DotNetCoreIdentity.EF.Context;
@@ -73,16 +74,13 @@ namespace DotNetCoreIdentity.Web
 
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IPostService, PostService>();
-            services.AddAutoMapper();
-            //Mapper.Initialize(config => config.CreateMap<CategoryDto, Category>()
-            //.ForMember(x => x.Id, opt => opt.Ignore())
-            //.ForMember(x => x.CreatedDate, opt => opt.Ignore())
-            //.ForMember(x => x.CreatedBy, opt => opt.Ignore())
-            //.ForMember(x => x.CreatedById, opt => opt.Ignore())
-            //.ForMember(x => x.ModifiedById, opt => opt.Ignore())
-            //.ForMember(x => x.ModifiedBy, opt => opt.Ignore())
-            //.ForMember(x => x.ModifiedDate, opt => opt.Ignore())
-            //);
+            MapperConfiguration mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutoMapperProfile());
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

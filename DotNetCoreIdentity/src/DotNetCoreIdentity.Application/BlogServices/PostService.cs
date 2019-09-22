@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DotNetCoreIdentity.Application.BlogServices.Dtos;
 using DotNetCoreIdentity.Application.CategoryServices.Dtos;
 using DotNetCoreIdentity.Domain.BlogEntries;
+using DotNetCoreIdentity.Domain.Identity;
 using DotNetCoreIdentity.EF.Context;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotNetCoreIdentity.Application.BlogServices
@@ -13,9 +16,14 @@ namespace DotNetCoreIdentity.Application.BlogServices
     public class PostService : IPostService
     {
         private readonly ApplicationUserDbContext _context;
-        public PostService(ApplicationUserDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMapper _mapper;
+
+        public PostService(ApplicationUserDbContext context, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             _context = context;
+            _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<ApplicationResult<PostDto>> Get(Guid id)
@@ -69,14 +77,37 @@ namespace DotNetCoreIdentity.Application.BlogServices
 
         public async Task<ApplicationResult<List<PostDto>>> GetAll()
         {
-            throw new NotImplementedException();
+
+            
         }
 
 
 
         public async Task<ApplicationResult<PostDto>> Create(CreatePostInput input)
         {
-            throw new NotImplementedException();
+            try
+            {
+                // useri al
+                var user = await _userManager.FindByIdAsync(input.CreatedById);
+                // maple
+                Post newPost = _mapper.Map<Post>(input);
+                newPost.CreatedBy = user.UserName;
+                // context e ekle
+                await _context.Posts.AddAsync(newPost);
+                // kaydet
+                await _context.SaveChangesAsync();
+                // ve dto'yu maple ve return et
+                return await Get(newPost.Id);
+            }
+            catch (Exception ex)
+            {
+                return new ApplicationResult<PostDto>
+                {
+                    Result = new PostDto(),
+                    Succeeded = false,
+                    ErrorMessage = ex.Message
+                };
+            }
         }
 
         public async Task<ApplicationResult> Delete(Guid id)
