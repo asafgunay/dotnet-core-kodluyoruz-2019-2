@@ -28,6 +28,11 @@ namespace DotNetCoreIdentity.Web.Controllers
             List<PostDto> model = getAllService.Result;
             return View(model);
         }
+        public async Task<IActionResult> Details(Guid id)
+        {
+            ApplicationResult<PostDto> data = await _postService.Get(id);
+            return View(data.Result);
+        }
         public async Task<IActionResult> Create()
         {
             var categoryList = await _categoryService.GetAll();
