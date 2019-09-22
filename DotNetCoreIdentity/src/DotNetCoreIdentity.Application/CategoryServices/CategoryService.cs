@@ -62,7 +62,6 @@ namespace DotNetCoreIdentity.Application
                 ApplicationResult<CategoryDto> result = new ApplicationResult<CategoryDto>();
                 result.Succeeded = false;
                 result.ErrorMessage = ex.Message;
-                // TODO: hata mesajini da gonder
                 return result;
             }
 
@@ -88,7 +87,6 @@ namespace DotNetCoreIdentity.Application
             }
             catch (Exception ex)
             {
-                // TODO: Hata mesaji icin alan olustur
                 return new ApplicationResult { Succeeded = false, ErrorMessage = ex.Message };
             }
         }

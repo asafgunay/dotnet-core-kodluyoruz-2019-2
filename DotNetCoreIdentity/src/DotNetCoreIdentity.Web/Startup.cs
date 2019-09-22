@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using DotNetCoreIdentity.Application;
+using DotNetCoreIdentity.Application.BlogServices;
 using DotNetCoreIdentity.Application.CategoryServices.Dtos;
 using DotNetCoreIdentity.Domain.Identity;
 using DotNetCoreIdentity.Domain.PostTypes;
@@ -71,6 +72,7 @@ namespace DotNetCoreIdentity.Web
             });
 
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IPostService, PostService>();
             services.AddAutoMapper();
             //Mapper.Initialize(config => config.CreateMap<CategoryDto, Category>()
             //.ForMember(x => x.Id, opt => opt.Ignore())
@@ -81,7 +83,7 @@ namespace DotNetCoreIdentity.Web
             //.ForMember(x => x.ModifiedBy, opt => opt.Ignore())
             //.ForMember(x => x.ModifiedDate, opt => opt.Ignore())
             //);
-           
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
