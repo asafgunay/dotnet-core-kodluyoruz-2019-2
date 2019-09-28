@@ -7,7 +7,20 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">@item.Title</h5>
-                    <p class="card-text">@item.Content.Substring(0, 90)..</p>
+
+                    @if (item.Content.Length > 90)
+                    {
+                        <p class="card-text">
+                            @item.Content.Substring(0, 90)..
+
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="card-text">
+                            @item.Content
+                        </p>
+                    }
                     <a asp-action="Index" asp-controller="Blog" asp-route-categoryUrl="@item.Category.UrlName" asp-route-postUrl="@item.UrlName" class="card-link">Devamini oku</a>
                 </div>
             </div>
