@@ -1,0 +1,17 @@
+﻿@model IEnumerable<DotNetCoreIdentity.Application.BlogServices.Dtos.PostDto>
+<div class="row mt-5">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Title</h5>
+                    <p class="card-text">@item.Content.Substring(0, 90)..</p>
+                    <a asp-action="Index" asp-controller="Blog" asp-route-categoryUrl="@item.Category.UrlName" asp-route-postUrl="@item.UrlName" class="card-link">Devamini oku</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
