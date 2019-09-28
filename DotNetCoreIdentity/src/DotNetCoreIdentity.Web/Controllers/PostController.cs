@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using DotNetCoreIdentity.Application;
 using DotNetCoreIdentity.Application.BlogServices;
 using DotNetCoreIdentity.Application.BlogServices.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DotNetCoreIdentity.Web.Controllers
 {
+    [Authorize(Roles="Admin,Editor")]
     public class PostController : Controller
     {
         private readonly IPostService _postService;
@@ -117,6 +119,25 @@ namespace DotNetCoreIdentity.Web.Controllers
                 Text = c.Name
             }).ToList();
             return View(model);
+        }
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var model = await _postService.Get(id);
+            return View(model.Result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id, PostDto input)
+        {
+            if(ModelState.IsValid && id == input.Id)
+            {
+                var delete = await _postService.Delete(id);
+                if (delete.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            ModelState.AddModelError(string.Empty, "Bir hata olustu");
+            return View(input);
         }
     }
 }
