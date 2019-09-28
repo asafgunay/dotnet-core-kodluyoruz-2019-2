@@ -38,8 +38,8 @@ namespace DotNetCoreIdentity.Web.Controllers
             var categoryList = await _categoryService.GetAll();
             ViewBag.CategoryDDL = categoryList.Result.Select(x => new SelectListItem
             {
-                Selected= false,
-                Text=x.Name,
+                Selected = false,
+                Text = x.Name,
                 Value = x.Id.ToString()
             }).ToList();
 
@@ -62,6 +62,27 @@ namespace DotNetCoreIdentity.Web.Controllers
                 // hata varsa hatayi ModelState e ekle
                 ModelState.AddModelError(string.Empty, createService.ErrorMessage);
             }
+            return View(model);
+        }
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var post = await _postService.Get(id);
+            var categoryList = await _categoryService.GetAll();
+            ViewBag.CategoryDDL = categoryList.Result.Select(c => new SelectListItem
+            {
+                Selected = false,
+                Value = c.Id.ToString(),
+                Text = c.Name
+            }).ToList();
+            UpdatePostInput model = new UpdatePostInput
+            {
+                Id= post.Result.Id,
+                CategoryId= post.Result.CategoryId,
+                Content=post.Result.Content,
+                Title= post.Result.Title,
+                UrlName = post.Result.UrlName,
+                CreatedById = post.Result.CreatedById
+            };
             return View(model);
         }
     }

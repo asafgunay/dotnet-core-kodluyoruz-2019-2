@@ -66,7 +66,7 @@
                     @Html.DisplayFor(modelItem => item.ModifiedBy)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    <a asp-action="Update" asp-controller="Post" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Güncelle</a> |
                     <a asp-action="Details" asp-controller="Post" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Detay</a>
                     @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                     @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
