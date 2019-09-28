@@ -1,0 +1,80 @@
+﻿@model IEnumerable<DotNetCoreIdentity.Application.BlogServices.Dtos.PostDto>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UrlName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedById)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedById)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrlName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedById)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedById)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
