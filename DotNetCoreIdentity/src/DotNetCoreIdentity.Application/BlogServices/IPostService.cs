@@ -10,6 +10,7 @@ namespace DotNetCoreIdentity.Application.BlogServices
     {
         Task<ApplicationResult<PostDto>> Get(Guid id);
         Task<ApplicationResult<List<PostDto>>> GetAll();
+        Task<ApplicationResult<PostDto>> GetByUrl(string categoryUrl, string postUrl);
         Task<ApplicationResult<PostDto>> Create(CreatePostInput input);
         Task<ApplicationResult<PostDto>> Update(UpdatePostInput input);
         Task<ApplicationResult> Delete(Guid id);
