@@ -85,5 +85,38 @@ namespace DotNetCoreIdentity.Web.Controllers
             };
             return View(model);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(Guid id, UpdatePostInput model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (id != model.Id)
+                {
+                    ModelState.AddModelError(string.Empty, "Forma müdahele etme!");
+                }
+                else
+                {
+                    model.ModifiedById = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                    var updatePost = await _postService.Update(model);
+                    if (updatePost.Succeeded)
+                    {
+                        return RedirectToAction("Details", new { id = model.Id });
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Bir hata olustu:\n"+ updatePost.ErrorMessage);
+                    }
+                }
+            }
+            var categoryList = await _categoryService.GetAll();
+            ViewBag.CategoryDDL = categoryList.Result.Select(c => new SelectListItem
+            {
+                Selected = false,
+                Value = c.Id.ToString(),
+                Text = c.Name
+            }).ToList();
+            return View(model);
+        }
     }
 }

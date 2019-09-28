@@ -37,11 +37,13 @@ namespace DotNetCoreIdentity.Application.Shared
                 .ForMember(x => x.ModifiedDate, opt => opt.Ignore())
                 .ForMember(x => x.CreatedBy, opt => opt.Ignore());
 
-
-
-
-
-
+            CreateMap<UpdatePostInput, Post>()
+                .ForMember(x => x.Id, opt => opt.UseDestinationValue())
+                .ForMember(x => x.CreatedDate, opt => opt.UseDestinationValue())
+                .ForMember(x => x.CreatedBy, opt => opt.UseDestinationValue())
+                .ForMember(x => x.CreatedById, opt => opt.UseDestinationValue())
+                .ForMember(x => x.ModifiedBy, opt => opt.UseDestinationValue())
+                .ForMember(x => x.ModifiedDate, opt => opt.MapFrom(s => DateTime.UtcNow));
         }
 
     }
