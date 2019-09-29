@@ -251,6 +251,28 @@ namespace DotNetCoreIdentity.Application.BlogServices
             }
 
         }
+
+        public async Task<ApplicationResult> UpdateImageUrl(Guid id, string filePath)
+        {
+            try
+            {
+                var existPost = await _context.Posts.FindAsync(id);
+                existPost.ImageUrl = filePath;
+                await _context.SaveChangesAsync();
+                return new ApplicationResult
+                {
+                    Succeeded = true
+                };
+            }
+            catch (Exception e)
+            {
+                return new ApplicationResult
+                {
+                    Succeeded = false,
+                    ErrorMessage = e.Message
+                };
+            }
+        }
     }
 
 }

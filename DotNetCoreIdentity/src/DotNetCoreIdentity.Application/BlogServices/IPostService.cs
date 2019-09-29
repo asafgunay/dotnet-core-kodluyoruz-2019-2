@@ -14,5 +14,6 @@ namespace DotNetCoreIdentity.Application.BlogServices
         Task<ApplicationResult<PostDto>> Create(CreatePostInput input);
         Task<ApplicationResult<PostDto>> Update(UpdatePostInput input);
         Task<ApplicationResult> Delete(Guid id);
+        Task<ApplicationResult> UpdateImageUrl(Guid id, string filePath);
     }
 }

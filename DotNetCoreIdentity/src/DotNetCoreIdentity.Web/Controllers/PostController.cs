@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ using Microsoft.Extensions.FileProviders;
 
 namespace DotNetCoreIdentity.Web.Controllers
 {
-    [Authorize(Roles="Admin,Editor")]
+    [Authorize(Roles = "Admin,Editor")]
     public class PostController : Controller
     {
         private readonly IPostService _postService;
@@ -93,10 +94,10 @@ namespace DotNetCoreIdentity.Web.Controllers
             }).ToList();
             UpdatePostInput model = new UpdatePostInput
             {
-                Id= post.Result.Id,
-                CategoryId= post.Result.CategoryId,
-                Content=post.Result.Content,
-                Title= post.Result.Title,
+                Id = post.Result.Id,
+                CategoryId = post.Result.CategoryId,
+                Content = post.Result.Content,
+                Title = post.Result.Title,
                 UrlName = post.Result.UrlName,
                 CreatedById = post.Result.CreatedById
             };
@@ -122,7 +123,7 @@ namespace DotNetCoreIdentity.Web.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Bir hata olustu:\n"+ updatePost.ErrorMessage);
+                        ModelState.AddModelError(string.Empty, "Bir hata olustu:\n" + updatePost.ErrorMessage);
                     }
                 }
             }
@@ -143,7 +144,7 @@ namespace DotNetCoreIdentity.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(Guid id, PostDto input)
         {
-            if(ModelState.IsValid && id == input.Id)
+            if (ModelState.IsValid && id == input.Id)
             {
                 var delete = await _postService.Delete(id);
                 if (delete.Succeeded)
@@ -163,8 +164,31 @@ namespace DotNetCoreIdentity.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UploadImage(Guid id, IFormFile file)
         {
+            if (file != null || file.Length != 0)
+            {
+                // resmi al degiskene ata
+                FileInfo fi = new FileInfo(file.FileName);
+                // bir dosya adi belirle
+                var newFileName = id.ToString() + "_" + String.Format("{0:d}", (DateTime.Now.Ticks / 10) % 100000000) + fi.Extension;
+                // resmi belirtilen path'e yukle
+                var webPath = _env.WebRootPath;
+                var path = Path.Combine("", webPath + @"\images\" + newFileName);
+                var pathToSave = @"/images/" + newFileName;
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
 
-            return View();
+                // yukleme tamamlandiktan sonra resmin yolunu db'ye yukle (imageUrl alanini olustur)
+                var updateUrl = await _postService.UpdateImageUrl(id, pathToSave);
+                if (updateUrl.Succeeded)
+                {
+                    return RedirectToAction("UploadImage", new { id });
+                }
+
+            }
+
+            return RedirectToAction("Error", "Home");
         }
 
     }

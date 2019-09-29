@@ -10,6 +10,7 @@ namespace DotNetCoreIdentity.Application.BlogServices.Dtos
         public string Title { get; set; }
         public string Content { get; set; }
         public string UrlName { get; set; }
+        public string ImageUrl { get; set; }
         public int? CategoryId { get; set; }
         public CategoryDto Category { get; set; }
     }
