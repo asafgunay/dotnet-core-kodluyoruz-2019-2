@@ -18,4 +18,9 @@
     <ProjectReference Include="..\DotNetCoreIdentity.EF\DotNetCoreIdentity.EF.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>

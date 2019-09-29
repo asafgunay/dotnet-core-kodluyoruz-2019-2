@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -19,6 +20,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 namespace DotNetCoreIdentity.Web
 {
@@ -81,7 +83,10 @@ namespace DotNetCoreIdentity.Web
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-
+            services.AddSingleton<IFileProvider>(new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images")
+                )
+                );
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

@@ -7,8 +7,11 @@ using DotNetCoreIdentity.Application;
 using DotNetCoreIdentity.Application.BlogServices;
 using DotNetCoreIdentity.Application.BlogServices.Dtos;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.FileProviders;
 
 namespace DotNetCoreIdentity.Web.Controllers
 {
@@ -17,11 +20,16 @@ namespace DotNetCoreIdentity.Web.Controllers
     {
         private readonly IPostService _postService;
         private readonly ICategoryService _categoryService;
+        private readonly IFileProvider _fileProvider;
+        private readonly IHostingEnvironment _env;
 
-        public PostController(IPostService postService, ICategoryService categoryService)
+
+        public PostController(IPostService postService, ICategoryService categoryService, IFileProvider fileProvider, IHostingEnvironment env)
         {
             _postService = postService;
             _categoryService = categoryService;
+            _fileProvider = fileProvider;
+            _env = env;
         }
         // liste
         public async Task<IActionResult> Index()
@@ -146,5 +154,18 @@ namespace DotNetCoreIdentity.Web.Controllers
             ModelState.AddModelError(string.Empty, "Bir hata olustu");
             return View(input);
         }
+        public async Task<IActionResult> UploadImage(Guid id)
+        {
+            ApplicationResult<PostDto> data = await _postService.Get(id);
+            return View(data.Result);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UploadImage(Guid id, IFormFile file)
+        {
+
+            return View();
+        }
+
     }
 }
