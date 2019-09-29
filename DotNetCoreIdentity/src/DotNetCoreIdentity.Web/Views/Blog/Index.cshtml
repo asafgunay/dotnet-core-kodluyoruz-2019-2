@@ -3,9 +3,31 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>@Model.Title</h1>
-<div class="container">
-    <p>@Model.Content</p>
+<div class="container-fluid my-1 py-3" style="background-color:#ececec">
+    <div class="row">
+        <div class="col-6 col-md-6">
+            <h3 class="text-dark text-center my-4">@Model.Title</h3>
+
+        </div>
+        <div class="col-6  col-md-6">
+            <div class="align-content-center mt-3">
+                <p class="text-right text-black-50" style="margin-bottom:0px; font-size:12px;">
+                    Oluşturan Yazar: @Model.CreatedBy | Oluşturma Tarihi: @Model.CreatedDate.ToString("dd MMM yyyy, ddd")
+                </p>
+                @if (!string.IsNullOrEmpty(Model.ModifiedBy))
+                {
+                    <p class="text-right text-black-50 mt-2" style="margin-bottom:0px; font-size:12px;">
+                        Düzenleyen Yazar: @Model.ModifiedBy | Düzenleme Tarihi: @Model.ModifiedDate.Value.ToString("dd MMM yyyy, ddd")
+                    </p>
+                }
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<div class="col-md-6 col-sm-12 col-12 mt-3">
+    <p class="text-black-50 text-center">@Model.Content</p>
 </div>
 
 
