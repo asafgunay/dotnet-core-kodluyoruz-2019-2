@@ -1,0 +1,39 @@
+﻿@model DotNetCoreIdentity.Web.ViewModels.Manage.RoleViewModel
+
+@{
+    ViewData["Title"] = "Rolü sil";
+    Layout = "/Views/Shared/_Layout.cshtml";
+    bool hasError = !string.IsNullOrEmpty(ViewBag.ErrorMessage);
+}
+
+<h3 class="text-danger">@ViewBag.ErrorMessage</h3>
+<div>
+    <h4>Bu rolü silmek istediğinize emin misiniz?</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+
+    <form asp-action="DeleteRole">
+        @if (hasError)
+        {
+            <input type="submit" value="Delete" class="btn btn-danger" disabled />
+        }
+        else
+        {
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        }
+        | <a asp-action="Roles">Back to List</a>
+    </form>
+</div>

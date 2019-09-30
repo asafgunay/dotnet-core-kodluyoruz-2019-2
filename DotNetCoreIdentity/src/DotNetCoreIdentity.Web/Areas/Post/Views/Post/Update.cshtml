@@ -1,0 +1,58 @@
+﻿@model DotNetCoreIdentity.Application.BlogServices.Dtos.UpdatePostInput
+
+@{
+    ViewData["Title"] = "Update";
+    Layout = "/Views/Shared/_Layout.cshtml";
+
+}
+
+<h1>Update</h1>
+
+<h4>UpdatePostInput</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Update" id="update-form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <textarea asp-for="Content" rows="10" cols="10" class="form-control"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UrlName" class="control-label"></label>
+                <input asp-for="UrlName" class="form-control" />
+                <span asp-validation-for="UrlName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" asp-items="ViewBag.CategoryDDL" class="form-control"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <input asp-for="CreatedById" type="hidden" />
+            <input asp-for="Id" type="hidden" />
+            <div class="form-group">
+                <input onclick="submitForm()" id="submit-form-btn" type="submit" value="Güncelle" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Listeye dön</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function submitForm() {
+            $("#submit-form-btn").attr("disabled", "disabled");
+            $("#update-form").submit();
+        }
+    </script>
+}

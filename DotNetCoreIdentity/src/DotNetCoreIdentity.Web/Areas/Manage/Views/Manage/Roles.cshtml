@@ -1,0 +1,47 @@
+﻿@model IEnumerable<DotNetCoreIdentity.Web.ViewModels.Manage.RoleViewModel>
+
+@{
+    ViewData["Title"] = "Roles";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Roles</h1>
+
+<p>
+    <a asp-action="CreateRole">Yeni rol oluştur</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Düzenle", "EditRole", new { id = item.Id }) |
+                    @Html.ActionLink("Detay", "RoleDetail", new { roleId = item.Id }) |
+                    @Html.ActionLink("Sil", "DeleteRole", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="Index">Kullanıcı listesine geri dön</a>
+</p>
