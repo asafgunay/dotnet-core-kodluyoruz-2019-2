@@ -117,7 +117,7 @@
                 id: $("#confirm-delete").attr("data-id")
             };
             $.ajax({
-                url: "/Post/DeleteApi",
+                url: "/CMS/Post/DeleteApi",
                 method: "POST",
                 headers: { "content-type": "application/json" },
                 data: JSON.stringify(params)

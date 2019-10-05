@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DotNetCoreIdentity.Web.Areas.CMS.Controllers
 {
     [Authorize(Roles = "Admin, Editor")]
-    [Area("Category")]
+    [Area("CMS")]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
