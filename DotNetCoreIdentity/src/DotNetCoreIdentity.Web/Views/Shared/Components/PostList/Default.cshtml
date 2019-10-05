@@ -21,7 +21,7 @@
                             @item.Content
                         </p>
                     }
-                    <a asp-action="Index" asp-controller="Blog" asp-route-categoryUrl="@item.Category.UrlName" asp-route-postUrl="@item.UrlName" class="card-link">Devamini oku</a>
+                    <a asp-area="Blog" asp-action="Index" asp-controller="Blog" asp-route-categoryUrl="@item.Category.UrlName" asp-route-postUrl="@item.UrlName" class="card-link">Devamini oku</a>
                 </div>
             </div>
         </div>

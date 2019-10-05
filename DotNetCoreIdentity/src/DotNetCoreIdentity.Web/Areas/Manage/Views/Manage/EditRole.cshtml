@@ -1,0 +1,52 @@
+﻿@model DotNetCoreIdentity.Web.ViewModels.Manage.RoleViewModel
+
+@{
+    ViewData["Title"] = "EditRole";
+    Layout = "/Views/Shared/_Layout.cshtml";
+    string msg = ViewBag.IsRoleEditable ? "Bu rolü düzenleyebilirsiniz." : "Bu bir sistem rolüdür düzenleyemezsiniz.";
+}
+
+<h1>@Model.Name rolünü düzenle</h1>
+
+<h4>@msg</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditRole">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" type="hidden" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                @if (ViewBag.IsRoleEditable)
+                {
+                    <input asp-for="Name" class="form-control" />
+                }
+                else
+                {
+                    <input asp-for="Name" class="form-control" disabled />
+                }
+
+
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @if (ViewBag.IsRoleEditable)
+                {
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                }
+                else
+                {
+                    <input type="submit" value="Save" class="btn btn-primary" disabled />
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Roles">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

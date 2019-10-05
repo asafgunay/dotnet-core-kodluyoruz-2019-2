@@ -6,7 +6,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     @* Kullanici giris yapmissa ekrana kullanici bilgilerini ve cikis yap butonunu ekle *@
-    <form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm" class="navbar-right">
+    <form asp-area="Account" asp-controller="Account" asp-action="Logout" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <span>Merhaba @User.Identity.Name</span>
@@ -26,7 +26,7 @@ else
     @* Yapmamissa, Login ve Register butonlarini goster *@
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <a asp-action="Login" asp-controller="Account" class="btn btn-outline-primary">Giriş</a>
+            <a asp-area="Account" asp-action="Login" asp-controller="Account" class="btn btn-outline-primary">Giriş</a>
         </li>
         <li>
             <a asp-action="Register" asp-controller="Account" class="btn btn-outline-primary">Kayıt ol</a>

@@ -111,8 +111,25 @@ namespace DotNetCoreIdentity.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    name: "Category",
+                    template: "{area:exists}/{controller=Category}/{action=Index}/{id?}"
+                );
+                routes.MapRoute(
+                    name: "Manage",
+                    template: "{area:exists}/{controller=Manage}/{action=Index}/{id?}"
+                );
+                routes.MapRoute(
+                    name: "Post",
+                    template: "{area:exists}/{controller=Post}/{action=Index}/{id?}"
+                );
+
+                routes.MapRoute(
+                    name: "Blog",
+                    template: "{area:exists}/{controller=Blog}/{action=Index}/{id?}"
+                );
+                routes.MapRoute(
+                        name: "default",
+                        template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
