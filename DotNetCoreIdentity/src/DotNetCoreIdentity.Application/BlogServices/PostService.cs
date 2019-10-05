@@ -27,7 +27,7 @@ namespace DotNetCoreIdentity.Application.BlogServices
             _userManager = userManager;
             _mapper = mapper;
         }
-
+        
         public async Task<ApplicationResult<PostDto>> Get(Guid id)
         {
             try

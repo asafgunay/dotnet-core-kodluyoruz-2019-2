@@ -18,7 +18,9 @@ namespace DotNetCoreIdentity.Web.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var postList = await _postService.GetAll();
+           
             return View(postList.Result);
         }
+     
     }
 }

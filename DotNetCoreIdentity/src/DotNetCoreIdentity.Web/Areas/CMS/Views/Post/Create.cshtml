@@ -5,13 +5,14 @@
     Layout = "/Views/Shared/_Layout.cshtml";
 
 }
+<link href="~/lib/froala-editor/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
 
 <h1>Create</h1>
 
 <h4>CreatePostInput</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Create" id="create-form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -21,8 +22,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
-                <textarea asp-for="Content" rows="10" cols="10" class="form-control"></textarea>
+                <textarea asp-for="Content" id="blog-content"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <textarea id="blog-content-2"></textarea>
             </div>
             <div class="form-group">
                 <label asp-for="UrlName" class="control-label"></label>
@@ -47,11 +51,16 @@
 </div>
 
 @section Scripts {
+    <script src="~/lib/froala-editor/js/froala_editor.pkgd.min.js"></script>
+
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         function submitForm() {
             $("#submit-form-btn").attr("disabled", "disabled");
             $("#create-form").submit();
         }
+        new FroalaEditor("#blog-content");
+        
     </script>
 }

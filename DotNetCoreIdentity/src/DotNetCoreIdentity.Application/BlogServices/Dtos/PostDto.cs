@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace DotNetCoreIdentity.Application.BlogServices.Dtos
@@ -19,5 +20,7 @@ namespace DotNetCoreIdentity.Application.BlogServices.Dtos
         [Display(Name ="Kategori")]
         public int? CategoryId { get; set; }
         public CategoryDto Category { get; set; }
+       
+        public string PlainContent { get; set; }
     }
 }

@@ -26,4 +26,87 @@
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\froala-editor\js\froala_editor.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\froala_editor.pkgd.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\ar.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\bs.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\cs.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\da.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\de.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\el.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\en_ca.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\en_gb.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\es.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\et.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\fa.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\fi.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\fr.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\he.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\hr.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\hu.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\id.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\it.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\ja.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\ko.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\ku.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\me.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\nb.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\nl.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\pl.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\pt_br.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\pt_pt.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\ro.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\ru.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\sk.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\sr.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\sv.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\th.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\tr.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\uk.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\vi.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\zh_cn.js" />
+    <None Include="wwwroot\lib\froala-editor\js\languages\zh_tw.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins.pkgd.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\align.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\char_counter.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\code_beautifier.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\code_view.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\colors.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\draggable.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\edit_in_popup.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\emoticons.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\entities.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\file.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\font_family.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\font_size.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\forms.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\fullscreen.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\help.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\image.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\image_manager.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\inline_class.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\inline_style.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\line_breaker.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\line_height.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\link.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\lists.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\paragraph_format.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\paragraph_style.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\print.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\quick_insert.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\quote.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\save.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\special_characters.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\table.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\url.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\video.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\plugins\word_paste.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\third_party\embedly.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\third_party\font_awesome.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\third_party\image_tui.min.js" />
+    <None Include="wwwroot\lib\froala-editor\js\third_party\spell_checker.min.js" />
+  </ItemGroup>
+
 </Project>

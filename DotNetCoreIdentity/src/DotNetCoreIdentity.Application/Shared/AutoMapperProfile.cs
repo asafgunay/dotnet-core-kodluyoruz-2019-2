@@ -4,6 +4,7 @@ using DotNetCoreIdentity.Application.CategoryServices.Dtos;
 using DotNetCoreIdentity.Domain.BlogEntries;
 using DotNetCoreIdentity.Domain.PostTypes;
 using System;
+using System.Text.RegularExpressions;
 
 namespace DotNetCoreIdentity.Application.Shared
 {
@@ -25,7 +26,8 @@ namespace DotNetCoreIdentity.Application.Shared
             // Post Service
 
             CreateMap<Post, PostDto>()
-                .ForMember(x => x.Category, opt => opt.MapFrom<Category>(c => c.Category));
+                .ForMember(x => x.Category, opt => opt.MapFrom<Category>(c => c.Category))
+                .ForMember(x => x.PlainContent, opt => opt.MapFrom(s => RemoveHTMLTags(s.Content)));
             CreateMap<PostDto, Post>()
                 .ForMember(x => x.Category, opt => opt.MapFrom<CategoryDto>(c => c.Category));
 
@@ -45,6 +47,9 @@ namespace DotNetCoreIdentity.Application.Shared
                 .ForMember(x => x.ModifiedBy, opt => opt.UseDestinationValue())
                 .ForMember(x => x.ModifiedDate, opt => opt.MapFrom(s => DateTime.UtcNow));
         }
-
+        private string RemoveHTMLTags(string HTMLCode)
+        {
+            return Regex.Replace(HTMLCode, @"<[^>]*>", String.Empty);
+        }
     }
 }

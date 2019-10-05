@@ -26,7 +26,7 @@ namespace DotNetCoreIdentity.Test
                 var service = new CategoryService(inMemoryContext, mapper);
                 CreateCategoryInput fakeCategory = new CreateCategoryInput
                 {
-                    CreatedById = new Guid().ToString(), // sahte kullanici
+                    CreatedById = Guid.NewGuid().ToString(), // sahte kullanici
                     Name = "Lorem Ipsum",
                     UrlName = "lorem-ipsum"
                 };
@@ -60,7 +60,7 @@ namespace DotNetCoreIdentity.Test
                 var service = new CategoryService(inMemoryContext, mapper);
                 CreateCategoryInput fakeCategory = new CreateCategoryInput
                 {
-                    CreatedById = new Guid().ToString(), // sahte kullanici
+                    CreatedById = Guid.NewGuid().ToString(), // sahte kullanici
                     Name = "Lorem Ipsum",
                     UrlName = "lorem-ipsum"
                 };
@@ -68,31 +68,43 @@ namespace DotNetCoreIdentity.Test
             }
             ApplicationResult<CategoryDto> resultUpdate = new ApplicationResult<CategoryDto>();
 
-            // var olan kategoriyi guncelle
+            // yeni kategori olustu mu test et ve var olan kategoriyi guncelle
             using (var inMemoryContext = new ApplicationUserDbContext(options))
             {
-                var service = new CategoryService(inMemoryContext, mapper);
+                // create servis duzgun calisti mi?
+                Assert.True(resultCreate.Succeeded);
+                Assert.NotNull(resultCreate.Result);
+                // update islemini yap!
 
                 var item = await inMemoryContext.Categories.FirstOrDefaultAsync();
+                var service = new CategoryService(inMemoryContext, mapper);
                 var fakeUpdate = new UpdateCategoryInput
                 {
                     Id = item.Id,
                     CreatedById = item.CreatedById,
-                    ModifiedById = new Guid().ToString(),
+                    ModifiedById = Guid.NewGuid().ToString(),
                     Name = "Lorem Ipsum Dolor",
                     UrlName = "lorem-ipsum-dolor"
                 };
                 // update servisi calistir
                 resultUpdate = await service.Update(fakeUpdate);
             }
-            // kontrol et
+            // update basarili mi kontrol et
             using (var inMemoryContext = new ApplicationUserDbContext(options))
             {
                 // contextte kategori var mi?
-                // create servis duzgun calisti mi?
+                Assert.Equal(1, await inMemoryContext.Categories.CountAsync());
                 // update servis duzgun calisti mi?
+                Assert.True(resultUpdate.Succeeded);
+                Assert.NotNull(resultUpdate.Result);
                 // update islem basarili mi (context ten gelen veri ile string ifadeleri karsilastir)
+                var item = await inMemoryContext.Categories.FirstAsync();
+                Assert.Equal("Lorem Ipsum Dolor", item.Name);
+                Assert.Equal("lorem-ipsum-dolor", item.UrlName);
+                Assert.Equal(resultUpdate.Result.ModifiedById, item.ModifiedById);
             }
         }
+        // get testi
+        // delete testi
     }
 }
