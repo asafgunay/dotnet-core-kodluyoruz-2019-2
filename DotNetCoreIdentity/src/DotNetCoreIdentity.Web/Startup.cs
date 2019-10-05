@@ -110,22 +110,14 @@ namespace DotNetCoreIdentity.Web
             app.UseAuthentication();
             app.UseMvc(routes =>
             {
+               
                 routes.MapRoute(
-                    name: "Category",
-                    template: "{area:exists}/{controller=Category}/{action=Index}/{id?}"
+                    name: "Account",
+                    template: "{area:exists}/{controller=Account}/{action=Index}/{id?}"
                 );
                 routes.MapRoute(
-                    name: "Manage",
-                    template: "{area:exists}/{controller=Manage}/{action=Index}/{id?}"
-                );
-                routes.MapRoute(
-                    name: "Post",
+                    name: "CMS",
                     template: "{area:exists}/{controller=Post}/{action=Index}/{id?}"
-                );
-
-                routes.MapRoute(
-                    name: "Blog",
-                    template: "{area:exists}/{controller=Blog}/{action=Index}/{id?}"
                 );
                 routes.MapRoute(
                         name: "default",

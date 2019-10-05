@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace DotNetCoreIdentity.Web.Controllers
+namespace DotNetCoreIdentity.Web.Account.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Route("Manage")]
-    [Area("Manage")]
+    [Area("Account")]
     public class ManageController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

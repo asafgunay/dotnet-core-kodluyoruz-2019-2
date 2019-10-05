@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetCoreIdentity.Web.Controllers
 {
-    [Area("Blog")]
     public class BlogController : Controller
     {
         private readonly IPostService _postService;

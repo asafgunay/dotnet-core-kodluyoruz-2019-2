@@ -22,14 +22,7 @@
   <ItemGroup>
     <Folder Include="Areas\Account\Data\" />
     <Folder Include="Areas\Account\Models\" />
-    <Folder Include="Areas\Blog\Data\" />
-    <Folder Include="Areas\Blog\Models\" />
-    <Folder Include="Areas\Category\Data\" />
-    <Folder Include="Areas\Category\Models\" />
-    <Folder Include="Areas\Manage\Data\" />
-    <Folder Include="Areas\Manage\Models\" />
-    <Folder Include="Areas\Post\Data\" />
-    <Folder Include="Areas\Post\Models\" />
+    <Folder Include="Areas\CMS\Models\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

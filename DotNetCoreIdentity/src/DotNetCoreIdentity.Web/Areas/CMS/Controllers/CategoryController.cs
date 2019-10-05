@@ -8,7 +8,7 @@ using DotNetCoreIdentity.Application.CategoryServices.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetCoreIdentity.Web.Areas.Category
+namespace DotNetCoreIdentity.Web.Areas.CMS.Controllers
 {
     [Authorize(Roles = "Admin, Editor")]
     [Area("Category")]

@@ -7,7 +7,7 @@ using DotNetCoreIdentity.Web.ViewModels.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetCoreIdentity.Web.Areas.Account
+namespace DotNetCoreIdentity.Web.Areas.Account.Controllers
 {
     [Area("Account")]
     public class AccountController : Controller
