@@ -15,6 +15,9 @@ namespace DotNetCoreIdentity.EF.Context
         {
 
         }
+
+        
+
         // veritabani degisikligi icin migration almaliyiz
         // Package Manager Console icin migration almak(Context'i olusturdugunuz proje default project alaninda secili olmali)
         // Add-Migration MigrationAdi

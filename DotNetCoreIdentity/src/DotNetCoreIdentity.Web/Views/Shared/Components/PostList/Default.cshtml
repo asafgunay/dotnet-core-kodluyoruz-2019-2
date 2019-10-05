@@ -3,9 +3,12 @@
 
     @foreach (var item in Model)
     {
-        <div class="col-sm-4">
-            <div class="card">
+        <div class="col-md-4 col-sm-12">
+            <div class="card my-2">
+                <img src="@item.ImageUrl" class="card-img-top"/>
                 <div class="card-body">
+
+
                     <h5 class="card-title">@item.Title</h5>
 
                     @if (item.Content.Length > 90)

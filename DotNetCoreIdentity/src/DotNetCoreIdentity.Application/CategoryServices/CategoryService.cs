@@ -16,12 +16,12 @@ namespace DotNetCoreIdentity.Application
     public class CategoryService : ICategoryService
     {
         private readonly ApplicationUserDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        // private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
-        public CategoryService(ApplicationUserDbContext context, UserManager<ApplicationUser> userManager, IMapper mapper)
+        public CategoryService(ApplicationUserDbContext context, /*UserManager<ApplicationUser> userManager,*/ IMapper mapper)
         {
             _context = context;
-            _userManager = userManager;
+            // _userManager = userManager;
             _mapper = mapper;
         }
 
@@ -29,10 +29,10 @@ namespace DotNetCoreIdentity.Application
         {
             try
             {
-                var user = await _userManager.FindByIdAsync(input.CreatedById);
+                //var user = await _userManager.FindByIdAsync(input.CreatedById);
                 Category mapCat = _mapper.Map<Category>(input);
                 mapCat.CreatedById = input.CreatedById;
-                mapCat.CreatedBy = user.UserName;
+                //mapCat.CreatedBy = user.UserName;
                 _context.Categories.Add(mapCat);
                 await _context.SaveChangesAsync();
                 ApplicationResult<CategoryDto> result = new ApplicationResult<CategoryDto>
@@ -161,12 +161,12 @@ namespace DotNetCoreIdentity.Application
         {
             try
             {
-                var modifierUser = await _userManager.FindByIdAsync(input.ModifiedById);
+                // var modifierUser = await _userManager.FindByIdAsync(input.ModifiedById);
                 var getExistCategory = await _context.Categories.FindAsync(input.Id);
                 getExistCategory.Name = input.Name;
                 getExistCategory.UrlName = input.UrlName;
-                getExistCategory.ModifiedBy = modifierUser.UserName;
-                getExistCategory.ModifiedById = modifierUser.Id;
+                //getExistCategory.ModifiedBy = modifierUser.UserName;
+                getExistCategory.ModifiedById = input.ModifiedById;
                 getExistCategory.ModifiedDate = DateTime.UtcNow;
                 _context.Update(getExistCategory);
                 await _context.SaveChangesAsync();

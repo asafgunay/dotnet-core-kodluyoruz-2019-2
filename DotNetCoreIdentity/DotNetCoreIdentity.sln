@@ -5,13 +5,17 @@ VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6D22365C-7A90-44E0-8D62-C5A21676DF80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreIdentity.Web", "src\DotNetCoreIdentity.Web\DotNetCoreIdentity.Web.csproj", "{456A3F47-002E-44E4-831F-35F4DE2B1BE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCoreIdentity.Web", "src\DotNetCoreIdentity.Web\DotNetCoreIdentity.Web.csproj", "{456A3F47-002E-44E4-831F-35F4DE2B1BE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreIdentity.Domain", "src\DotNetCoreIdentity.Domain\DotNetCoreIdentity.Domain.csproj", "{700F2414-13C5-4C89-8009-9D7BA680F3D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCoreIdentity.Domain", "src\DotNetCoreIdentity.Domain\DotNetCoreIdentity.Domain.csproj", "{700F2414-13C5-4C89-8009-9D7BA680F3D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreIdentity.EF", "src\DotNetCoreIdentity.EF\DotNetCoreIdentity.EF.csproj", "{583D5319-76CB-4777-AC7E-0EFDC0C2FCDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCoreIdentity.EF", "src\DotNetCoreIdentity.EF\DotNetCoreIdentity.EF.csproj", "{583D5319-76CB-4777-AC7E-0EFDC0C2FCDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreIdentity.Application", "src\DotNetCoreIdentity.Application\DotNetCoreIdentity.Application.csproj", "{CBF54F17-426F-496B-97EF-7F075DEFAF79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCoreIdentity.Application", "src\DotNetCoreIdentity.Application\DotNetCoreIdentity.Application.csproj", "{CBF54F17-426F-496B-97EF-7F075DEFAF79}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{AF6D84E7-D4ED-4317-9518-84724BAB156E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreIdentity.Test", "test\DotNetCoreIdentity.Test\DotNetCoreIdentity.Test.csproj", "{139B1907-6BC6-40F2-8586-294A5C7D5C49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +39,10 @@ Global
 		{CBF54F17-426F-496B-97EF-7F075DEFAF79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBF54F17-426F-496B-97EF-7F075DEFAF79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBF54F17-426F-496B-97EF-7F075DEFAF79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{139B1907-6BC6-40F2-8586-294A5C7D5C49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{139B1907-6BC6-40F2-8586-294A5C7D5C49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{139B1907-6BC6-40F2-8586-294A5C7D5C49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{139B1907-6BC6-40F2-8586-294A5C7D5C49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +52,7 @@ Global
 		{700F2414-13C5-4C89-8009-9D7BA680F3D4} = {6D22365C-7A90-44E0-8D62-C5A21676DF80}
 		{583D5319-76CB-4777-AC7E-0EFDC0C2FCDA} = {6D22365C-7A90-44E0-8D62-C5A21676DF80}
 		{CBF54F17-426F-496B-97EF-7F075DEFAF79} = {6D22365C-7A90-44E0-8D62-C5A21676DF80}
+		{139B1907-6BC6-40F2-8586-294A5C7D5C49} = {AF6D84E7-D4ED-4317-9518-84724BAB156E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A890CD05-A7D5-4A6E-BF2F-B64893CC1108}
