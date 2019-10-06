@@ -31,6 +31,28 @@ namespace DotNetCoreIdentity.Test
             var service = new CategoryService(inMemoryContext, mapper);
             return await service.Create(fakeCategory);
         }
+        public async Task AssertCreatedCategory(ApplicationUserDbContext inMemoryContext, ApplicationResult<CategoryDto> resultCreate)
+        {
+            Assert.True(resultCreate.Succeeded);
+            Assert.NotNull(resultCreate.Result);
+            Assert.Equal(1, await inMemoryContext.Categories.CountAsync());
+            var item = await inMemoryContext.Categories.FirstOrDefaultAsync();
+            Assert.Equal("Tester1", item.CreatedBy);
+            Assert.Equal("Lorem Ipsum", item.Name);
+            Assert.Equal("lorem-ipsum", item.UrlName);
+            Assert.Equal(resultCreate.Result.CreatedById, item.CreatedById);
+        }
+        public async Task AssertCreatedCategory(ApplicationUserDbContext inMemoryContext, ApplicationResult<CategoryDto> resultCreate, CreateCategoryInput fakeCategory)
+        {
+            Assert.True(resultCreate.Succeeded);
+            Assert.NotNull(resultCreate.Result);
+            Assert.Equal(1, await inMemoryContext.Categories.CountAsync());
+            var item = await inMemoryContext.Categories.FirstOrDefaultAsync();
+            Assert.Equal(fakeCategory.CreatedBy, item.CreatedBy);
+            Assert.Equal(fakeCategory.Name, item.Name);
+            Assert.Equal(fakeCategory.UrlName, item.UrlName);
+            Assert.Equal(resultCreate.Result.CreatedById, item.CreatedById);
+        }
         #endregion
 
         [Fact]
