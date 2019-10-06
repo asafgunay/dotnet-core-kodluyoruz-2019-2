@@ -11,6 +11,27 @@ namespace DotNetCoreIdentity.Test
 {
     public class CategoryServiceShould
     {
+        #region create category helpers
+        public async Task<ApplicationResult<CategoryDto>> CreateCategory(ApplicationUserDbContext inMemoryContext, IMapper mapper)
+        {
+            var service = new CategoryService(inMemoryContext, mapper);
+            CreateCategoryInput fakeCategory = new CreateCategoryInput
+            {
+                CreatedById = Guid.NewGuid().ToString(), // sahte kullanici
+                CreatedBy = "Tester1",
+                Name = "Lorem Ipsum",
+                UrlName = "lorem-ipsum"
+            };
+            return await service.Create(fakeCategory);
+        }
+
+        public async Task<ApplicationResult<CategoryDto>> CreateCategory(ApplicationUserDbContext inMemoryContext, IMapper mapper, CreateCategoryInput fakeCategory)
+        {
+            var service = new CategoryService(inMemoryContext, mapper);
+            return await service.Create(fakeCategory);
+        }
+        #endregion
+
         [Fact]
         public async Task CreateNewCategory()
         {
@@ -23,15 +44,7 @@ namespace DotNetCoreIdentity.Test
             ApplicationResult<CategoryDto> result = new ApplicationResult<CategoryDto>();
             using (var inMemoryContext = new ApplicationUserDbContext(options))
             {
-                var service = new CategoryService(inMemoryContext, mapper);
-                CreateCategoryInput fakeCategory = new CreateCategoryInput
-                {
-                    CreatedById = Guid.NewGuid().ToString(), // sahte kullanici
-                    CreatedBy = "Tester1",
-                    Name = "Lorem Ipsum",
-                    UrlName = "lorem-ipsum"
-                };
-                result = await service.Create(fakeCategory);
+                result = await CreateCategory(inMemoryContext, mapper);
             }
 
             using (var inMemoryContext = new ApplicationUserDbContext(options))
@@ -59,15 +72,7 @@ namespace DotNetCoreIdentity.Test
             // bir yeni kategori olustur
             using (var inMemoryContext = new ApplicationUserDbContext(options))
             {
-                var service = new CategoryService(inMemoryContext, mapper);
-                CreateCategoryInput fakeCategory = new CreateCategoryInput
-                {
-                    CreatedById = Guid.NewGuid().ToString(), // sahte kullanici
-                    CreatedBy = "Tester1",
-                    Name = "Lorem Ipsum",
-                    UrlName = "lorem-ipsum"
-                };
-                resultCreate = await service.Create(fakeCategory);
+                resultCreate = await CreateCategory(inMemoryContext, mapper);
             }
 
             ApplicationResult<CategoryDto> resultUpdate = new ApplicationResult<CategoryDto>();
@@ -126,15 +131,7 @@ namespace DotNetCoreIdentity.Test
             // Bir kategori olustur
             using (var inMemoryContext = new ApplicationUserDbContext(options))
             {
-                var service = new CategoryService(inMemoryContext, mapper);
-                CreateCategoryInput fakeCategory = new CreateCategoryInput
-                {
-                    CreatedById = Guid.NewGuid().ToString(), // sahte kullanici
-                    CreatedBy = "Tester1",
-                    Name = "Lorem Ipsum",
-                    UrlName = "lorem-ipsum"
-                };
-                resultCreate = await service.Create(fakeCategory);
+                resultCreate = await CreateCategory(inMemoryContext, mapper);
             }
             ApplicationResult<CategoryDto> resultGet = new ApplicationResult<CategoryDto>();
             // create servis dogru calistimi kontrol et ve get servisi calistir
@@ -163,6 +160,8 @@ namespace DotNetCoreIdentity.Test
             }
         }
         // delete testi
+
+        
 
     }
 }
