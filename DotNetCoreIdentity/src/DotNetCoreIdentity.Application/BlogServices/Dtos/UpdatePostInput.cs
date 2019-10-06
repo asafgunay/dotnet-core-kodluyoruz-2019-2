@@ -8,5 +8,7 @@ namespace DotNetCoreIdentity.Application.BlogServices.Dtos
     {
         public Guid Id { get; set; }
         public string ModifiedById { get; set; }
+        public string ModifiedBy { get; set; }
+
     }
 }

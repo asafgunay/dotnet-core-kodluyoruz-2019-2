@@ -17,5 +17,7 @@ namespace DotNetCoreIdentity.Application.BlogServices.Dtos
         [Display(Name ="Kategori")]
         public int? CategoryId { get; set; }
         public string CreatedById { get; set; }
+        public string CreatedBy { get; set; }
+
     }
 }
