@@ -87,7 +87,7 @@ namespace DotNetCoreIdentity.Test
                     Id = item.Id,
                     CreatedById = item.CreatedById,
                     ModifiedById = Guid.NewGuid().ToString(),
-                    ModifiedBy ="Tester2",
+                    ModifiedBy = "Tester2",
                     Name = "Lorem Ipsum Dolor",
                     UrlName = "lorem-ipsum-dolor"
                 };
@@ -112,6 +112,57 @@ namespace DotNetCoreIdentity.Test
             }
         }
         // get testi
+        [Fact]
+        public async Task GetCategory()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationUserDbContext>().UseInMemoryDatabase(databaseName: "Test_GetCategory").Options;
+            MapperConfiguration mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutoMapperProfile());
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+
+            ApplicationResult<CategoryDto> resultCreate = new ApplicationResult<CategoryDto>();
+            // Bir kategori olustur
+            using (var inMemoryContext = new ApplicationUserDbContext(options))
+            {
+                var service = new CategoryService(inMemoryContext, mapper);
+                CreateCategoryInput fakeCategory = new CreateCategoryInput
+                {
+                    CreatedById = Guid.NewGuid().ToString(), // sahte kullanici
+                    CreatedBy = "Tester1",
+                    Name = "Lorem Ipsum",
+                    UrlName = "lorem-ipsum"
+                };
+                resultCreate = await service.Create(fakeCategory);
+            }
+            ApplicationResult<CategoryDto> resultGet = new ApplicationResult<CategoryDto>();
+            // create servis dogru calistimi kontrol et ve get servisi calistir
+            using (var inMemoryContext = new ApplicationUserDbContext(options))
+            {
+                // create servis duzgun calisti mi?
+                Assert.True(resultCreate.Succeeded);
+                Assert.NotNull(resultCreate.Result);
+
+                // get islemini calistir
+                var service = new CategoryService(inMemoryContext, mapper);
+                resultGet = await service.Get(resultCreate.Result.Id);
+            }
+            // get servis dogru calistimi kontrol et
+            using (var inMemoryContext = new ApplicationUserDbContext(options))
+            {
+                // get servis dogru calisti mi kontrolu
+                Assert.True(resultGet.Succeeded);
+                Assert.NotNull(resultGet.Result);
+                Assert.Equal("Lorem Ipsum", resultGet.Result.Name);
+                Assert.Equal("lorem-ipsum", resultGet.Result.UrlName);
+                Assert.Equal(1, await inMemoryContext.Categories.CountAsync());
+                var item = await inMemoryContext.Categories.FirstAsync();
+                Assert.Equal("Lorem Ipsum", item.Name);
+                Assert.Equal("lorem-ipsum", item.UrlName);
+            }
+        }
         // delete testi
+
     }
 }
