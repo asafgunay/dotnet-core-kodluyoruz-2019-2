@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using DotNetCoreIdentity.Application;
+using DotNetCoreIdentity.Application.Shared;
 using DotNetCoreIdentity.Domain.Identity;
 using DotNetCoreIdentity.EF.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -17,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace DotNetCoreIdentity.Web.Api
 {
@@ -85,6 +89,52 @@ namespace DotNetCoreIdentity.Web.Api
             });
             #endregion
 
+
+            #region swagger config
+            var security = new Dictionary<string, IEnumerable<string>>
+                {
+                    {"Bearer", new string[]{ } }
+                };
+            services.AddSwaggerGen(s =>
+            {
+                s.SwaggerDoc(
+                    "DotNetCoreIdentityApi",
+                    new Info
+                    {
+                        Title = "DotNetCoreIdentity Api Documentation",
+                        Version = "0.0.1",
+                        Contact = new Contact
+                        {
+                            Email = "info@kodluyoruz.org",
+                            Name = "Kodluyoruz",
+                            Url = "kodluyoruz.org"
+                        },
+                        Description = "Bu bir api dokumantasyonudur!",
+                        TermsOfService = "kodluyoruz.org/privacy"
+                    });
+
+                s.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    Type = "apiKey",
+                    Description = "Jwt Auth",
+                    In = "header",
+                    Name = "Authorization"
+                });
+                s.AddSecurityRequirement(security);
+            });
+            #endregion
+
+
+            MapperConfiguration mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutoMapperProfile());
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+
+            services.AddScoped<ICategoryService, CategoryService>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -102,6 +152,10 @@ namespace DotNetCoreIdentity.Web.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSwagger().UseSwaggerUI(u =>
+            {
+                u.SwaggerEndpoint("/swagger/DotNetCoreIdentityApi/swagger.json", "Swagger Test Api Endpoint");
+            });
 
             app.UseHttpsRedirection();
             app.UseMvc();
