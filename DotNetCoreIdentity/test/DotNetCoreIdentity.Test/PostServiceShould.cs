@@ -49,6 +49,9 @@ namespace DotNetCoreIdentity.Test
 
         async Task AssertCreatedPostAsync(ApplicationUserDbContext inMemoryContext, List<ApplicationResult<PostDto>> resultList, List<CreatePostInput> fakePostList)
         {
+            // burasi onemli
+            Assert.Equal(fakePostList.Count, await inMemoryContext.Posts.CountAsync());
+
             foreach (var fakePost in fakePostList)
             {
                 ApplicationResult<PostDto> foundResult = resultList.Find(x =>
@@ -72,7 +75,7 @@ namespace DotNetCoreIdentity.Test
                 Assert.Equal(fakePost.UrlName, item.UrlName);
                 Assert.Equal(fakePost.Content, item.Content);
             }
-            Assert.Equal(fakePostList.Count, await inMemoryContext.Posts.CountAsync());
+           
         }
         #endregion
 
