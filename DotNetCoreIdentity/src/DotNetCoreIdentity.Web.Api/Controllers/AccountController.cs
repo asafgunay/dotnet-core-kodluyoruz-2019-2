@@ -49,18 +49,64 @@ namespace DotNetCoreIdentity.Web.Api.Controllers
             }
             return BadRequest(ModelState);
         }
+        [HttpPost]
+        [Route("register")]
+        public async Task<IActionResult> Register(RegisterViewModel input)
+        {
+            // gelen modeli valide et
+            if (ModelState.IsValid)
+            {
+                // validse kaydet
+                // ApplicationUser olustur
+                var newUser = new ApplicationUser
+                {
+                    UserName = input.Email,
+                    Email = input.Email,
+                    FirstName = input.FirstName,
+                    LastName = input.LastName,
+                    EmailConfirmed = true,
+                    TwoFactorEnabled = false,
+                    NationalIdNumber = input.NationalIdNumber
+                };
 
+                var registerUser = await _userManager.CreateAsync(newUser, input.Password);
+                if (registerUser.Succeeded)
+                {
+                    // giris yapsin
+                    await _signInManager.SignInAsync(newUser, isPersistent: false);
+                    // token donun
+                    var user = await _userManager.FindByNameAsync(newUser.UserName);
+                    return Ok(GetTokenResponse(user));
+                }
+                // kaydetme basarisizsa hatalari modelstate e ekle
+                AddErrors(registerUser);
+
+            }
+            // validasyon hatasi varsa badrequest don
+            return BadRequest(ModelState);
+
+        }
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var err in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, err.Description);
+            }
+        }
         private JwtTokenResult GetTokenResponse(ApplicationUser user)
         {
             var token = GetToken(user);
             JwtTokenResult result = new JwtTokenResult
             {
                 AccessToken = token,
+                // hayali bir deger tam calismiyor.
                 ExpireInSeconds = _configuration.GetValue<int>("Tokens:Lifetime"),
                 UserId = user.Id
             };
             return result;
         }
+
+        // tanimadiginiz fonksiyonlari ogrenmeye calisin
         private string GetToken(ApplicationUser user)
         {
             var utcNow = DateTime.UtcNow;
