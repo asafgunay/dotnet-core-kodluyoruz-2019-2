@@ -16,17 +16,17 @@ namespace DotNetCoreIdentity.Test
     public class PostServiceShould
     {
         #region CreatePostHelpers
-        public async Task<List<ApplicationResult<PostDto>>> CreatePost(List<CreatePostInput> fakePostList, string categoryDbName, string postDbName)
+        // verileri kayit ederken db ayarlarinin ayni dbname icerisinde olduguna dikkat edin, eger db nameler farkliysa test verileri farkli veri tabanlarina kayit olur. tum test metotlarinda(Fact'lerde) ayri dbName'ler verilmesinin sebebi budur.
+        public async Task<List<ApplicationResult<PostDto>>> CreatePost(List<CreatePostInput> fakePostList, string postDbName)
         {
-            var optionsCategory = new DbContextOptionsBuilder<ApplicationUserDbContext>().UseInMemoryDatabase(databaseName: categoryDbName).Options;
-            var optionsPost = new DbContextOptionsBuilder<ApplicationUserDbContext>().UseInMemoryDatabase(databaseName: postDbName).Options;
+            var options = new DbContextOptionsBuilder<ApplicationUserDbContext>().UseInMemoryDatabase(databaseName: postDbName).Options;
             MapperConfiguration mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new AutoMapperProfile());
             });
             IMapper mapper = mappingConfig.CreateMapper();
             ApplicationResult<CategoryDto> result = new ApplicationResult<CategoryDto>();
-            using (var inMemoryContext = new ApplicationUserDbContext(optionsCategory))
+            using (var inMemoryContext = new ApplicationUserDbContext(options))
             {
                 CategoryServiceShould categoryShould = new CategoryServiceShould();
                 result = await categoryShould.CreateCategory(inMemoryContext, mapper);
@@ -34,7 +34,7 @@ namespace DotNetCoreIdentity.Test
             }
 
             List<ApplicationResult<PostDto>> createdPostResulList = new List<ApplicationResult<PostDto>>();
-            using (var inMemoryContext = new ApplicationUserDbContext(optionsPost))
+            using (var inMemoryContext = new ApplicationUserDbContext(options))
             {
                 var service = new PostService(inMemoryContext, mapper);
                 foreach (var item in fakePostList)
@@ -79,7 +79,7 @@ namespace DotNetCoreIdentity.Test
         [Fact]
         public async Task CreateNewPost()
         {
-            string categoryDbName = "categoryDbCreateNewPost", postDbName = "postDbCreateNewPost";
+            string postDbName = "postDbCreateNewPost";
             var optionsPost = new DbContextOptionsBuilder<ApplicationUserDbContext>().UseInMemoryDatabase(databaseName: postDbName).Options;
 
             List<CreatePostInput> fakePostList = new List<CreatePostInput>
@@ -95,7 +95,7 @@ namespace DotNetCoreIdentity.Test
             };
 
 
-            var resultList = await CreatePost(fakePostList, categoryDbName, postDbName);
+            var resultList = await CreatePost(fakePostList, postDbName);
 
             using (var inMemoryContext = new ApplicationUserDbContext(optionsPost))
             {
@@ -105,7 +105,7 @@ namespace DotNetCoreIdentity.Test
         [Fact]
         public async Task UpdatePost()
         {
-            string categoryDbName = "categoryDbUpdatePost", postDbName = "postDbUpdatePost";
+            string postDbName = "postDbUpdatePost";
             var optionsPost = new DbContextOptionsBuilder<ApplicationUserDbContext>().UseInMemoryDatabase(databaseName: postDbName).Options;
             MapperConfiguration mappingConfig = new MapperConfiguration(mc =>
             {
@@ -124,7 +124,7 @@ namespace DotNetCoreIdentity.Test
                 }
             };
             ApplicationResult<PostDto> resultUpdatePost = new ApplicationResult<PostDto>();
-            List<ApplicationResult<PostDto>> resultList = await CreatePost(fakePostList, categoryDbName, postDbName);
+            List<ApplicationResult<PostDto>> resultList = await CreatePost(fakePostList, postDbName);
 
             using (var inMemoryContext = new ApplicationUserDbContext(optionsPost))
             {
@@ -159,9 +159,10 @@ namespace DotNetCoreIdentity.Test
             }
         }
         [Fact]
+        // Category alaninin null gelmesinin sebebi onun bilgisin baska bir veritabaninda tutulmasidir. Bu sebeple veritabani ismini ayni yaptik ve artik null gelmiyor.
         public async Task GetPost()
         {
-            string categoryDbName = "categoryDbGetPost", postDbName = "postDbGetPost";
+            string postDbName = "postDbGetPost";
             MapperConfiguration mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new AutoMapperProfile());
@@ -180,7 +181,7 @@ namespace DotNetCoreIdentity.Test
                     CreatedById = Guid.NewGuid().ToString()
                 }
             };
-            var resultList = await CreatePost(fakePostList, categoryDbName, postDbName);
+            var resultList = await CreatePost(fakePostList, postDbName);
             using (var inMemoryContext = new ApplicationUserDbContext(optionsPost))
             {
                 await AssertCreatedPostAsync(inMemoryContext, resultList, fakePostList);
@@ -199,7 +200,7 @@ namespace DotNetCoreIdentity.Test
                 Assert.Equal("Lorem Ipsum Dolor", resultGet.Result.Title);
                 Assert.Equal("lorem-ipsum-dolor", resultGet.Result.UrlName);
 
-                var optionsCategory = new DbContextOptionsBuilder<ApplicationUserDbContext>().UseInMemoryDatabase(databaseName: categoryDbName).Options;
+                var optionsCategory = new DbContextOptionsBuilder<ApplicationUserDbContext>().UseInMemoryDatabase(databaseName: postDbName).Options;
                 using (var inMemoryContextCategory = new ApplicationUserDbContext(optionsCategory))
                 {
                     Assert.Equal(1, await inMemoryContextCategory.Categories.CountAsync());
@@ -212,7 +213,7 @@ namespace DotNetCoreIdentity.Test
         [Fact]
         public async Task DeletePost()
         {
-            string categoryDbName = "categoryDbDeletePost", postDbName = "postDbDeletePost";
+            string postDbName = "postDbDeletePost";
             MapperConfiguration mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new AutoMapperProfile());
@@ -231,7 +232,7 @@ namespace DotNetCoreIdentity.Test
                     CreatedById = Guid.NewGuid().ToString()
                 }
             };
-            var resultList = await CreatePost(fakePostList, categoryDbName, postDbName);
+            var resultList = await CreatePost(fakePostList, postDbName);
             using (var inMemoryContext = new ApplicationUserDbContext(optionsPost))
             {
                 await AssertCreatedPostAsync(inMemoryContext, resultList, fakePostList);
@@ -251,7 +252,7 @@ namespace DotNetCoreIdentity.Test
         [Fact]
         public async Task GetAllPosts()
         {
-            string categoryDbName = "categoryDbGetAllPost", postDbName = "postDbGetAllPost";
+            string postDbName = "postDbGetAllPost";
             MapperConfiguration mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new AutoMapperProfile());
@@ -277,7 +278,7 @@ namespace DotNetCoreIdentity.Test
                     CreatedById = Guid.NewGuid().ToString()
                 }
             };
-            var resultList = await CreatePost(fakePostList, categoryDbName, postDbName);
+            var resultList = await CreatePost(fakePostList, postDbName);
             ApplicationResult<List<PostDto>> resultGetAll = new ApplicationResult<List<PostDto>>();
 
             using (var inMemoryContext = new ApplicationUserDbContext(optionsPost))
