@@ -98,3 +98,4 @@ Not: Eğer herhangi bir sorun yaşarsanız email üzerinden benimle iletişime g
 * Azure App Service ile uygulamayı yayınlama
 * AzureDevops Kullanımı
 
+-> Azure Devops Repo https://dev.azure.com/kodluyoruz/_git/DotNetCoreIdentity
